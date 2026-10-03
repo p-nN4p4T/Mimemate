@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ตัวจัดการงานค้าง</title>
+<meta name="theme-color" content="#4f6bed">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="งานค้าง">
+<style>
+:root{--bg:#f6f7fb;--card:#fff;--tx:#1d2433;--mu:#6b7280;--bd:#e3e6ee;--ac:#4f6bed;--rd:#e5484d;--or:#f59e0b;--gr:#2f9e6b;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12141b;--card:#1b1e28;--tx:#e8eaf0;--mu:#9aa1b2;--bd:#2c3140;--ac:#7d93ff}}
+:root[data-theme="dark"]{--bg:#12141b;--card:#1b1e28;--tx:#e8eaf0;--mu:#9aa1b2;--bd:#2c3140;--ac:#7d93ff}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:"Noto Sans Thai","Sarabun",system-ui,sans-serif;line-height:1.5}
+.wrap{max-width:920px;margin:0 auto;padding:16px}
+h1{font-size:22px;margin:4px 0 12px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:14px;margin-bottom:14px}
+.banner{border-radius:14px;padding:12px 14px;margin-bottom:14px;background:color-mix(in srgb,var(--rd) 12%,var(--card));border:1px solid var(--rd)}
+.banner.ok{background:color-mix(in srgb,var(--gr) 12%,var(--card));border-color:var(--gr)}
+.banner b{display:block;margin-bottom:4px}
+form{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.full{grid-column:1/-1}
+input,button,textarea{font:inherit;color:var(--tx)}
+input,textarea{padding:10px;border:1px solid var(--bd);border-radius:10px;background:var(--bg);width:100%}
+button{cursor:pointer;border:1px solid var(--bd);background:var(--card);border-radius:10px;padding:9px 12px}
+button.p{background:var(--ac);color:#fff;border-color:var(--ac);font-weight:600}
+.tabs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
+.tabs.f{margin:0}
+.tabs button.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+.sub h3{margin:0 0 6px;font-size:16px;display:flex;align-items:center;gap:8px}
+.dot{width:12px;height:12px;border-radius:50%;display:inline-block;flex:none}
+.task{display:flex;align-items:center;gap:8px;padding:8px 0;border-top:1px solid var(--bd);flex-wrap:wrap}
+.task .t{flex:1;min-width:140px;word-break:break-word}
+.task.done .t{text-decoration:line-through;color:var(--mu)}
+.dn{background:var(--gr);color:#fff;border-color:var(--gr);padding:6px 10px;font-size:14px}
+.dn.u{background:var(--card);color:var(--mu);border-color:var(--bd)}
+.badge{font-size:12px;padding:2px 8px;border-radius:99px;white-space:nowrap;background:var(--bd);color:var(--mu)}
+.badge.late{background:var(--rd);color:#fff}.badge.today{background:var(--or);color:#fff}.badge.soon{background:color-mix(in srgb,var(--or) 25%,var(--card));color:var(--tx)}
+.x{border:none;background:none;color:var(--mu);padding:4px 8px}
+.empty,.mu{color:var(--mu)}.empty{text-align:center;padding:20px}
+.weekbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;gap:8px;flex-wrap:wrap}
+.scroll{overflow-x:auto}
+.week{display:grid;grid-template-columns:repeat(7,minmax(120px,1fr));gap:8px;min-width:860px}
+.day{border:1px solid var(--bd);border-radius:12px;padding:8px;min-height:120px;background:var(--card)}
+.day.now{border-color:var(--ac);box-shadow:0 0 0 1px var(--ac)}
+.day h4{margin:0 0 6px;font-size:13px;color:var(--mu)}
+.chip{font-size:12px;padding:4px 6px;border-radius:8px;margin-bottom:4px;border-left:4px solid;background:var(--bg);word-break:break-word}
+.chip.done{opacity:.45;text-decoration:line-through}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--tx);color:var(--bg);padding:10px 16px;border-radius:99px;font-size:14px;z-index:9}
+textarea{min-height:110px;font-size:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>📚 งานค้างของฉัน</h1>
+  <div id="banner"></div>
+
+  <div class="card">
+    <form id="f" onsubmit="return false">
+      <div class="tabs f full"><button type="button" id="ty1" class="on">📝 งาน</button><button type="button" id="ty2">🎓 สอบ</button></div>
+      <input id="subj" class="full" list="subjs" placeholder="วิชา (เช่น คณิตศาสตร์)" autocomplete="off">
+      <datalist id="subjs"></datalist>
+      <input id="title" class="full" placeholder="งานอะไร (เช่น ทำแบบฝึกหัดบทที่ 3)" autocomplete="off">
+      <input id="due" type="date" aria-label="วันที่">
+      <button class="p" id="add">+ เพิ่มงาน</button>
+    </form>
+  </div>
+
+  <div class="tabs">
+    <button id="t1" class="on">📖 ตามวิชา</button>
+    <button id="t2">🗓️ สัปดาห์</button>
+    <button id="t4">🎓 ตารางสอบ</button>
+    <button id="t5">🤝 แชร์เพื่อน</button>
+    <button id="t3">🔔 แจ้งเตือน</button>
+  </div>
+  <div id="main"></div>
+</div>
+
+<script>
+var tasks=[],view="subj",wk=0,ty="task";
+var DAYS=["จันทร์","อังคาร","พุธ","พฤหัสฯ","ศุกร์","เสาร์","อาทิตย์"];
+try{tasks=JSON.parse(localStorage.getItem("hw")||"[]")}catch(e){tasks=[]}
+function save(){try{localStorage.setItem("hw",JSON.stringify(tasks))}catch(e){}}
+function $(i){return document.getElementById(i)}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function col(s){var h=0;for(var i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))%360;return"hsl("+h+" 65% 50%)"}
+function today(){var d=new Date();return new Date(d.getFullYear(),d.getMonth(),d.getDate())}
+function parse(s){var p=s.split("-");return new Date(+p[0],p[1]-1,+p[2])}
+function fmt(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+function diff(s){return Math.round((parse(s)-today())/864e5)}
+function dm(s){var d=parse(s);return d.getDate()+"/"+(d.getMonth()+1)}
+function toast(m){var e=document.createElement("div");e.className="toast";e.textContent=m;document.body.appendChild(e);setTimeout(function(){e.remove()},2200)}
+function isEx(t){return t.type==="exam"}
+function badge(t){
+  if(isEx(t)){
+    var n=diff(t.due);
+    if(n<0)return'<span class="badge">สอบแล้ว</span>';
+    if(n===0)return'<span class="badge late">สอบวันนี้!</span>';
+    if(n===1)return'<span class="badge today">สอบพรุ่งนี้</span>';
+    if(n<=7)return'<span class="badge soon">สอบอีก '+n+' วัน</span>';
+    return'<span class="badge">'+dm(t.due)+" (อีก "+n+" วัน)</span>";
+  }
+  if(t.done)return'<span class="badge">เสร็จแล้ว</span>';
+  if(!t.due)return'<span class="badge">ไม่มีกำหนด</span>';
+  var k=diff(t.due);
+  if(k<0)return'<span class="badge late">เลยกำหนด '+(-k)+' วัน</span>';
+  if(k===0)return'<span class="badge today">ส่งวันนี้!</span>';
+  if(k===1)return'<span class="badge soon">พรุ่งนี้</span>';
+  if(k<=3)return'<span class="badge soon">อีก '+k+' วัน</span>';
+  return'<span class="badge">'+dm(t.due)+" (อีก "+k+" วัน)</span>";
+}
+function sortT(a,b){if(!!a.done!==!!b.done)return a.done?1:-1;return(a.due||"9999").localeCompare(b.due||"9999")}
+function row(t){
+  var btn=isEx(t)?"":(t.done?'<button class="dn u" onclick="tog('+t.id+')">↩ ยกเลิก</button>':'<button class="dn" onclick="tog('+t.id+')">✓ ทำเสร็จ</button>');
+  return'<div class="task'+(t.done?" done":"")+'"><div class="t">'+(isEx(t)?"🎓 <b>สอบ</b> ":"")+esc(t.title)+"</div>"+badge(t)+btn+'<button class="x" onclick="del('+t.id+')" aria-label="ลบ">✕</button></div>';
+}
+function tog(id){tasks.forEach(function(t){if(t.id===id){t.done=!t.done;if(t.done)toast("เก่งมาก! ทำเสร็จแล้ว 🎉")}});save();render()}
+function del(id){tasks=tasks.filter(function(t){return t.id!==id});save();render()}
+function banner(){
+  var open=tasks.filter(function(t){return!isEx(t)&&!t.done&&t.due});
+  var late=open.filter(function(t){return diff(t.due)<0}),td=open.filter(function(t){return diff(t.due)===0}),tm=open.filter(function(t){return diff(t.due)===1});
+  var ex=tasks.filter(function(t){return isEx(t)&&diff(t.due)>=0&&diff(t.due)<=7}).sort(sortT);
+  var h="";
+  function l(a,x){if(a.length)h+="<div>"+x+": "+a.map(function(t){return esc(t.subj)+" – "+esc(t.title)}).join(", ")+"</div>"}
+  l(late,"🔴 เลยกำหนด");l(td,"🟠 ส่งวันนี้");l(tm,"🟡 ส่งพรุ่งนี้");
+  if(ex.length)h+="<div>🎓 สอบเร็วๆ นี้: "+ex.map(function(t){var n=diff(t.due);return esc(t.subj)+" ("+(n===0?"วันนี้":"อีก "+n+" วัน")+")"}).join(", ")+"</div>";
+  $("banner").innerHTML=h?'<div class="banner"><b>⚠️ ต้องรีบ</b>'+h+"</div>":'<div class="banner ok"><b>✅ ไม่มีงานด่วน</b>ยังไม่มีงานเลยกำหนด ส่งวันนี้/พรุ่งนี้ หรือสอบใน 7 วัน</div>';
+}
+function render(){
+  var s=[];tasks.forEach(function(t){if(s.indexOf(t.subj)<0)s.push(t.subj)});
+  $("subjs").innerHTML=s.map(function(x){return'<option value="'+esc(x)+'">'}).join("");
+  banner();
+  ["t1:subj","t2:week","t4:exam","t5:share"].forEach(function(p){var a=p.split(":");$(a[0]).className=view===a[1]?"on":""});
+  var m=$("main"),h;
+  if(view==="subj"){
+    if(!tasks.length){m.innerHTML='<div class="empty">ยังไม่มีงาน เพิ่มงานแรกด้านบนได้เลย 👆</div>';return}
+    m.innerHTML=s.map(function(x){
+      var list=tasks.filter(function(t){return t.subj===x}).sort(sortT);
+      var left=list.filter(function(t){return!t.done&&!isEx(t)}).length;
+      return'<div class="card sub"><h3><span class="dot" style="background:'+col(x)+'"></span>'+esc(x)+' <span class="badge">ค้าง '+left+"</span></h3>"+list.map(row).join("")+"</div>";
+    }).join("");
+  }else if(view==="week"){
+    var t0=today(),mon=new Date(t0.getFullYear(),t0.getMonth(),t0.getDate()-(t0.getDay()+6)%7+wk*7),sun=new Date(mon.getFullYear(),mon.getMonth(),mon.getDate()+6);
+    h='<div class="weekbar"><button onclick="wk--;render()">◀</button><b>'+mon.getDate()+"/"+(mon.getMonth()+1)+" – "+sun.getDate()+"/"+(sun.getMonth()+1)+'</b><button onclick="wk=0;render()">สัปดาห์นี้</button><button onclick="wk++;render()">▶</button></div><div class="scroll"><div class="week">';
+    for(var i=0;i<7;i++){
+      var d=new Date(mon.getFullYear(),mon.getMonth(),mon.getDate()+i),k=fmt(d);
+      var it=tasks.filter(function(t){return t.due===k}).sort(sortT);
+      h+='<div class="day'+(k===fmt(t0)?" now":"")+'"><h4>'+DAYS[i]+" "+d.getDate()+"/"+(d.getMonth()+1)+"</h4>"+it.map(function(t){return'<div class="chip'+(t.done?" done":"")+'" style="border-color:'+col(t.subj)+'"><b>'+esc(t.subj)+"</b><br>"+(isEx(t)?"🎓 สอบ: ":"")+esc(t.title)+"</div>"}).join("")+"</div>";
+    }
+    h+="</div></div>";
+    var nod=tasks.filter(function(t){return!t.due&&!t.done});
+    if(nod.length)h+='<div class="card" style="margin-top:12px"><b>ไม่มีวันกำหนดส่ง</b>'+nod.map(row).join("")+"</div>";
+    m.innerHTML=h;
+  }else if(view==="exam"){
+    var ex=tasks.filter(isEx).sort(sortT),up=ex.filter(function(t){return diff(t.due)>=0}),pa=ex.filter(function(t){return diff(t.due)<0});
+    h=!ex.length?'<div class="empty">ยังไม่มีวันสอบ กดปุ่ม 🎓 สอบ ด้านบนเพื่อเพิ่ม</div>':"";
+    if(up.length)h+='<div class="card"><b>สอบที่กำลังจะมาถึง</b>'+up.map(function(t){return'<div class="task"><span class="dot" style="background:'+col(t.subj)+'"></span><div class="t"><b>'+esc(t.subj)+"</b> – "+esc(t.title)+"<br><span class=mu>"+DAYS[(parse(t.due).getDay()+6)%7]+" "+dm(t.due)+"</span></div>"+badge(t)+'<button class="x" onclick="del('+t.id+')">✕</button></div>'}).join("")+"</div>";
+    if(pa.length)h+='<div class="card"><b class="mu">สอบไปแล้ว</b>'+pa.map(row).join("")+"</div>";
+    m.innerHTML=h;
+  }else{
+    m.innerHTML='<div class="card"><b>🤝 แชร์ให้เพื่อน</b><p class="mu">สร้างรหัสแล้วส่งให้เพื่อนทางไลน์/แชต เพื่อนวางรหัสในช่องนี้แล้วกดนำเข้า ก็จะได้ตารางสอบหรืองานของเรา</p><div class="tabs"><button onclick="exp(1)">สร้างรหัส: ตารางสอบ</button><button onclick="exp(0)">สร้างรหัส: ทั้งหมด</button></div><textarea id="code" placeholder="รหัสจะขึ้นที่นี่ หรือวางรหัสที่เพื่อนส่งมา"></textarea><div class="tabs" style="margin:10px 0 0"><button onclick="cp()">📋 คัดลอก</button><button class="p" onclick="imp()">⬇️ นำเข้ารหัสที่เพื่อนส่งมา</button></div></div>';
+  }
+}
+function exp(onlyEx){
+  var l=tasks.filter(function(t){return onlyEx?isEx(t):true}).map(function(t){return{s:t.subj,t:t.title,d:t.due,y:t.type||"task"}});
+  if(!l.length){toast("ยังไม่มีข้อมูลให้แชร์");return}
+  $("code").value=btoa(unescape(encodeURIComponent(JSON.stringify(l))));
+}
+function cp(){var c=$("code");if(!c.value){toast("ยังไม่มีรหัส");return}c.select();try{navigator.clipboard.writeText(c.value).then(function(){toast("คัดลอกแล้ว")},function(){document.execCommand("copy");toast("คัดลอกแล้ว")})}catch(e){try{document.execCommand("copy");toast("คัดลอกแล้ว")}catch(x){toast("กดค้างที่ช่องแล้วคัดลอกเอง")}}}
+function imp(){
+  var v=$("code").value.trim(),l,n=0;
+  try{l=JSON.parse(decodeURIComponent(escape(atob(v))));if(!Array.isArray(l))throw 0}catch(e){toast("รหัสไม่ถูกต้อง");return}
+  l.forEach(function(o,i){
+    if(!o||!o.s||!o.t)return;
+    var y=o.y==="exam"?"exam":"task";
+    if(tasks.some(function(t){return t.subj===o.s&&t.title===o.t&&(t.due||"")===(o.d||"")&&(t.type||"task")===y}))return;
+    tasks.push({id:Date.now()+i,subj:String(o.s).slice(0,60),title:String(o.t).slice(0,200),due:/^\d{4}-\d\d-\d\d$/.test(o.d||"")?o.d:"",done:false,type:y});n++;
+  });
+  save();toast("นำเข้า "+n+" รายการ");$("code").value="";banner();
+}
+function setTy(x){
+  ty=x;$("ty1").className=x==="task"?"on":"";$("ty2").className=x==="exam"?"on":"";
+  $("title").placeholder=x==="exam"?"สอบเรื่องอะไร (เช่น บทที่ 1-3 กลางภาค)":"งานอะไร (เช่น ทำแบบฝึกหัดบทที่ 3)";
+  $("add").textContent=x==="exam"?"+ เพิ่มวันสอบ":"+ เพิ่มงาน";
+}
+$("ty1").onclick=function(){setTy("task")};$("ty2").onclick=function(){setTy("exam")};
+$("add").onclick=function(){
+  var s=$("subj").value.trim(),t=$("title").value.trim(),d=$("due").value;
+  if(!s||!t){toast("กรอกวิชาและรายละเอียดก่อนนะ");return}
+  if(ty==="exam"&&!d){toast("เลือกวันสอบด้วยนะ");return}
+  tasks.push({id:Date.now(),subj:s,title:t,due:d,done:false,type:ty});
+  save();$("title").value="";$("due").value="";toast(ty==="exam"?"เพิ่มวันสอบแล้ว 🎓":"เพิ่มงานแล้ว ✅");render();
+};
+$("title").addEventListener("keydown",function(e){if(e.key==="Enter")$("add").click()});
+$("t1").onclick=function(){view="subj";render()};
+$("t2").onclick=function(){view="week";render()};
+$("t4").onclick=function(){view="exam";render()};
+$("t5").onclick=function(){view="share";render()};
+$("t3").onclick=function(){
+  if(!("Notification" in window)){toast("เบราว์เซอร์นี้ไม่รองรับการแจ้งเตือน");return}
+  Notification.requestPermission().then(function(p){if(p==="granted"){notify(true)}else toast("ยังไม่ได้อนุญาตการแจ้งเตือน")});
+};
+function notify(force){
+  if(!("Notification" in window)||Notification.permission!=="granted")return;
+  var key="hwn"+fmt(today()),dn=false;
+  try{dn=localStorage.getItem(key)}catch(e){}
+  if(dn&&!force)return;
+  var u=tasks.filter(function(t){return t.due&&(isEx(t)?(diff(t.due)>=0&&diff(t.due)<=3):(!t.done&&diff(t.due)<=1))});
+  if(!u.length)return;
+  new Notification("📚 มีเรื่องต้องรีบ "+u.length+" รายการ",{body:u.slice(0,4).map(function(t){return(isEx(t)?"สอบ ":"")+t.subj+": "+t.title}).join("\n")});
+  try{localStorage.setItem(key,"1")}catch(e){}
+}
+render();notify(false);
+setInterval(function(){if(view!=="share")render();notify(false)},60000);
+</script>
+</body>
+</html>
