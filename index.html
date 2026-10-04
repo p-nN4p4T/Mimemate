@@ -8,6 +8,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="งานค้าง">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#f3f4fa;--card:#fff;--tx:#1b2030;--mu:#6b7280;--bd:#e4e7f0;--ac:#5468f0;--ac2:#8b5cf6;--rd:#e5484d;--or:#f59e0b;--gr:#22a06b;--sh:0 2px 10px rgba(30,40,90,.07)}
 @media (prefers-color-scheme:dark){:root{--bg:#0f1117;--card:#1a1d27;--tx:#eceef5;--mu:#9aa1b4;--bd:#2a2f3f;--ac:#7388ff;--sh:none}}
@@ -80,15 +81,51 @@ textarea{min-height:100px;font-size:12px}
  #fab{bottom:calc(80px + env(safe-area-inset-bottom,0px));right:16px}
  .toast{bottom:150px}
 }
+
+:root{--ac:#6366f1;--ac2:#a855f7;--bg:#f4f5fb;--sh:0 4px 16px rgba(60,60,130,.08)}
+@media (prefers-color-scheme:dark){:root{--ac:#818cf8;--bg:#0f1117}}
+body{font-weight:400}
+.hero{border-radius:26px;padding:22px;box-shadow:0 10px 28px rgba(99,102,241,.3)}
+.card{border-radius:20px}
+nav button{transition:background .15s}
+select{width:100%;padding:12px;border:1.5px solid var(--bd);border-radius:12px;background:var(--bg);margin-bottom:10px;font:inherit;color:var(--tx)}
+.tabs{display:flex;gap:6px;margin:6px 0 14px}
+.tab{flex:1;min-width:0;border:1.5px solid var(--bd);background:var(--card);border-radius:14px;padding:9px 0;text-align:center;font-size:16px;font-weight:700;color:var(--tx)}
+.tab.on{background:linear-gradient(135deg,var(--ac),var(--ac2));border-color:transparent;color:#fff}
+.tab.now:not(.on){border-color:var(--ac);color:var(--ac)}
+.les{display:flex;align-items:stretch;background:var(--card);border:1px solid var(--bd);border-radius:16px;margin-bottom:8px;overflow:hidden;box-shadow:var(--sh)}
+.chips>.les{width:100%}
+.les .bar{width:6px;flex:none}
+.les .tm{width:66px;flex:none;padding:10px 0;text-align:center;font-size:12px;color:var(--mu);display:flex;flex-direction:column;justify-content:center;line-height:1.35}
+.les .tm b{color:var(--tx);font-size:15px}
+.les .bd{flex:1;padding:10px 6px 10px 4px;min-width:0}
+.les .nm{font-weight:700;font-size:17px}.les .sub{font-size:13px;color:var(--mu)}
+.les.brk{background:none;box-shadow:none;border-style:dashed;opacity:.7}
+.les .x{align-self:center;padding:8px 12px}
+#lg{position:fixed;inset:0;z-index:30;background:linear-gradient(135deg,var(--ac),var(--ac2));display:flex;align-items:center;justify-content:center;padding:20px}
+.lgc{background:var(--card);border-radius:26px;padding:28px 24px;width:100%;max-width:380px;text-align:center;box-shadow:0 20px 50px rgba(0,0,0,.25)}
+#lg input{text-align:center;font-size:18px}
+input[type=password]{width:100%;padding:12px;border:1.5px solid var(--bd);border-radius:12px;background:var(--bg);margin-bottom:10px}
+.dash{display:grid;grid-template-columns:1fr;gap:0 20px;align-items:start}
+@media(min-width:900px){.dash{grid-template-columns:1.15fr 1fr}main{padding:24px 40px 40px}.hero{padding:28px 30px}.hero h2{font-size:30px}}
+.mas{column-width:340px;column-gap:16px}.mas .card{break-inside:avoid}
+.who{margin-top:auto;padding:12px 6px 0;border-top:1px solid var(--bd);display:flex;flex-direction:column;gap:8px}
+.who button{border:1px solid var(--bd);background:none;border-radius:12px;padding:9px;color:var(--rd);justify-content:center;font-size:14px}
+@media(max-width:819px){.who{display:none}}
+.an{padding:10px 0;border-top:1px solid var(--bd)}.an:first-child{border-top:none;padding-top:0}
+.chat{display:block;text-align:center;text-decoration:none;margin-bottom:10px}
+.les,.tabs{max-width:760px}
+.ft{border-collapse:collapse;background:var(--card);font-size:14px;margin-top:12px}.ft th,.ft td{border:1px solid var(--bd);padding:6px 10px;text-align:center;white-space:nowrap}.ft th{position:sticky;top:0;background:var(--card)}
+.pay{border:none;border-radius:8px;padding:5px 12px;background:color-mix(in srgb,var(--rd) 18%,var(--card));color:var(--rd)}.pay.y{background:color-mix(in srgb,var(--gr) 20%,var(--card));color:var(--gr)}
 </style>
 </head>
 <body>
+<div id="lg"><div class="lgc"><div style="font-size:44px">📚</div><h2 style="margin:6px 0 14px">ตัวจัดการงานค้าง</h2><div class="seg" id="lgt"><button class="cb on" id="t1" onclick="lgMode(1)">เข้าสู่ระบบ</button><button class="cb" id="t2" onclick="lgMode(2)">สมัครใช้งาน</button></div><select id="lgr" style="display:none"><option value="admin">แอดมิน</option><option value="sec">ฝ่ายเลขา</option><option value="tre">ฝ่ายเหรัญญิก</option></select><input id="lgn" type="text" placeholder="ชื่อที่อยากให้เรียก" maxlength="30" autocomplete="off" style="display:none"><input id="lgi" type="text" inputmode="numeric" placeholder="เลขประจำตัวนักเรียน" autocomplete="off"><input id="lgp" type="password" placeholder="รหัสผ่าน" autocomplete="off" onkeydown="if(event.key==='Enter')doLogin()"><button class="btn p" style="width:100%" id="lgb" onclick="doLogin()">เข้าสู่ระบบ</button><p style="margin:16px 0 0;font-size:14px"><a href="#" id="lgf" onclick="lgMode(lgM===4?1:4);return false" style="color:var(--ac)">ลืมรหัสผ่าน?</a><br><a href="#" id="lga" onclick="lgMode(lgM===3?1:3);return false" style="color:var(--ac);display:inline-block;margin-top:8px">เข้าสู่ระบบเจ้าหน้าที่</a></p></div></div>
 <div id="app">
   <nav id="nav"></nav>
   <main id="main"></main>
 </div>
 <button id="fab" aria-label="เพิ่ม">+</button>
-<input id="img" type="file" accept="image/*" style="display:none" onchange="onImg(event)">
 <div id="ov"><div id="sheet"></div></div>
 
 <script>
@@ -96,10 +133,90 @@ var S={tasks:[],subjects:[],tt:[[],[],[],[],[],[],[]]},view="home",wk=0,flt="",f
 var DAYS=["จันทร์","อังคาร","พุธ","พฤหัสฯ","ศุกร์","เสาร์","อาทิตย์"];
 var HUES=[225,265,335,15,38,150,175,290,355,95];
 try{var r=localStorage.getItem("hw2");if(r)S=JSON.parse(r);else{var o=localStorage.getItem("hw");if(o)S.tasks=JSON.parse(o)}}catch(e){}
+var ADMIN="3968270465",KEY=null,ROLE="",SMIN=39677,SMAX=39706;
+function sess(){try{return localStorage.getItem("hwu")}catch(e){return null}}
+function loadS(){S={tasks:[],subjects:[],tt:[[],[],[],[],[],[],[]]};try{var r=localStorage.getItem(KEY)||(ROLE==="stu"&&localStorage.getItem("hw2"));if(r)S=JSON.parse(r)}catch(e){}
+  if(!S.tasks)S.tasks=[];if(!S.subjects)S.subjects=[];if(!S.tt||S.tt.length!==7)S.tt=[[],[],[],[],[],[],[]];
+  S.tt=S.tt.map(function(l){return(l||[]).map(function(x){return typeof x==="string"?{n:x}:x})});S.tasks.forEach(function(t){addSubj(t.subj)})}
+function login(id){ROLE=({admin:"admin",sec:"sec",tre:"tre"})[id]||"stu";KEY="hw2_"+id;loadS();if(ROLE==="admin"&&!S.ann)S.ann={chat:"",items:[]};if(ROLE==="sec"&&!S.hw)S.hw={items:[],ping:null};if(ROLE==="tre"&&!S.fee)S.fee={topics:[],paid:{},ping:null};pollAll();$("lg").style.display="none";$("lgp").value="";
+  if(ROLE==="admin"){if(!S.tt.some(function(l){return l.length}))applyTT(PRE)}else if(ROLE==="stu"&&!S.dflt)pullDef(1);
+  save();view="home";render();notify(false)}
+var lgM=1;
+function lgMode(m){lgM=m;var st=m===3;$("t1").className="cb"+(m===1?" on":"");$("t2").className="cb"+(m===2?" on":"");$("lgt").style.display=st||m===4?"none":"";$("lgn").style.display=m===2||m===4?"":"none";$("lgn").placeholder=m===4?"รหัสรีเซ็ตจากแอดมิน":"ชื่อที่อยากให้เรียก";$("lgi").style.display=st?"none":"";$("lgr").style.display=st?"":"none";$("lgp").placeholder=st?"รหัสเจ้าหน้าที่":m===4?"รหัสผ่านใหม่":"รหัสผ่าน";$("lgb").textContent=["","เข้าสู่ระบบ","สมัครและเข้าใช้งาน","เข้าสู่ระบบเจ้าหน้าที่","ตั้งรหัสผ่านใหม่"][m];$("lga").textContent=st?"← กลับ":"เข้าสู่ระบบเจ้าหน้าที่";$("lgf").textContent=m===4?"← กลับ":"ลืมรหัสผ่าน?";$("lgp").value=""}
+function accs(){try{return JSON.parse(localStorage.getItem("hwacc"))||{}}catch(e){return{}}}
+function uname(){return ({admin:"แอดมิน",sec:"ฝ่ายเลขา",tre:"ฝ่ายเหรัญญิก"})[ROLE]||(accs()[KEY.slice(4)]||{}).name||""}
+function hp(p){var t="hw|"+p;if(window.crypto&&crypto.subtle)return crypto.subtle.digest("SHA-256",new TextEncoder().encode(t)).then(function(b){return Array.from(new Uint8Array(b)).map(function(x){return("0"+x.toString(16)).slice(-2)}).join("")});var h=5381;for(var i=0;i<t.length;i++)h=(h*33^t.charCodeAt(i))>>>0;return Promise.resolve(""+h)}
+function enter(v){try{localStorage.setItem("hwu",v)}catch(e){}login(v)}
+function doLogin(){
+  var p=$("lgp").value;
+  if(lgM===3){var r=$("lgr").value;if(p===(r==="admin"?ADMIN:STAFF))login(r);else toast("รหัสไม่ถูกต้อง");return}
+  var v=$("lgi").value.trim(),n=/^\d{5}$/.test(v)?+v:0,nm=$("lgn").value.trim();
+  if(n<SMIN||n>SMAX){toast("เลขประจำตัวไม่ถูกต้อง");return}
+  if(p.length<4){toast("รหัสผ่านอย่างน้อย 4 ตัว");return}
+  var A=accs();
+  if(lgM===4){if(nm!==rcode(v)){toast("รหัสรีเซ็ตไม่ถูกต้องหรือหมดอายุ");return}if(!A[v]){toast("เครื่องนี้ยังไม่ได้สมัคร ให้กดสมัครใช้งานแทน");return}hp(p).then(function(h){A[v].h=h;try{localStorage.setItem("hwacc",JSON.stringify(A))}catch(e){}enter(v)});return}
+  if(lgM===2){if(!nm){toast("ใส่ชื่อก่อนนะ");return}if(A[v]){toast("เลขนี้สมัครแล้ว กดเข้าสู่ระบบ");return}
+    hp(p).then(function(h){A[v]={name:nm,h:h};try{localStorage.setItem("hwacc",JSON.stringify(A))}catch(e){}enter(v)});return}
+  if(!A[v]){toast("ยังไม่ได้สมัคร กดสมัครใช้งานก่อนนะ");return}
+  hp(p).then(function(h){if(h!==A[v].h){toast("รหัสผ่านไม่ถูกต้อง");return}enter(v)})}
+function logout(){try{localStorage.removeItem("hwu")}catch(e){}KEY=null;ROLE="";["lgn","lgi","lgp"].forEach(function(i){$(i).value=""});lgMode(1);$("lg").style.display="flex"}
+function start(){var u=sess();if(u&&accs()[u])login(u)}
+function pullDef(auto){fetch("timetable.json?"+Date.now()).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(j){if(!j||!Array.isArray(j.tt))throw 0;applyTT(j.tt);S.dflt=1;save();render();toast(auto?"ใส่ตารางเรียนเริ่มต้นให้แล้ว 🎉":"อัปเดตตารางล่าสุดแล้ว")}).catch(function(){toast("โหลดตารางเริ่มต้นไม่ได้ ลองใหม่ทีหลังนะ")})}
+function pullAsk(){if(confirm("ตารางเรียนเดิมจะถูกแทนที่ด้วยตารางล่าสุดจากแอดมิน ตกลงไหม?"))pullDef(0)}
+var STAFF="esmt_0014!!",EXTRA={admin:[["adm","🛠","แอดมิน"]],sec:[["hw","📝","การบ้าน"]],tre:[["fee","💰","เก็บเงิน"]]},HW={items:[],ping:null},FEE={topics:[],paid:{},ping:null},SIDS=[];
+for(var q=SMIN;q<=SMAX;q++)SIDS.push(""+q);
+function rcode(id){var t="rs|"+id+"|"+ADMIN+"|"+fmt(today()),h=7;for(var i=0;i<t.length;i++)h=(h*31+t.charCodeAt(i))>>>0;return String(h%1000000).padStart(6,"0")}
+function showRc(){var v=$("rid").value.trim();$("rc").textContent=/^\d{5}$/.test(v)?v+" → "+rcode(v):"ใส่เลขประจำตัว 5 หลักก่อนนะ"}
+function jget(f,cb){fetch(f+"?"+Date.now()).then(function(r){if(!r.ok)throw 0;return r.json()}).then(cb).catch(function(){})}
+function jDl(f,o){var b=new Blob([JSON.stringify(o)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=f;document.body.appendChild(a);a.click();a.remove()}
+function ping(p,k,ok){if(ROLE!=="stu"||!p||!p.ts)return;var key=KEY+k,last=0;try{last=+localStorage.getItem(key)||0}catch(e){}if(p.ts<=last)return;try{localStorage.setItem(key,p.ts)}catch(e){}if(!ok)return;toast("🔔 "+p.text);try{if(window.Notification&&Notification.permission==="granted")new Notification("🔔 "+p.text)}catch(e){}}
+function loadHW(){jget("homework.json",function(j){HW={items:j.items||[],ping:j.ping||null};if(ROLE==="sec"&&S.hw&&!S.hw.items.length&&!S.hw.ping){S.hw.items=HW.items.slice();save()}if(KEY&&view==="home")render();ping(HW.ping,"pH",1)})}
+function loadFee(){jget("fees.json",function(j){FEE={topics:j.topics||[],paid:j.paid||{},ping:j.ping||null};if(ROLE==="tre"&&S.fee&&!S.fee.topics.length){S.fee={topics:FEE.topics.slice(),paid:JSON.parse(JSON.stringify(FEE.paid)),ping:null};save()}if(KEY&&view==="home")render();var p=FEE.ping,me=KEY.slice(4);ping(p,"pF",p&&(!p.tid||(FEE.topics.some(function(t){return t.id===p.tid})&&(FEE.paid[me]||[]).indexOf(p.tid)<0)))})}
+function pollAll(){loadAnn();loadHW();loadFee()}
+function hwH(){var l=HW.items.slice().sort(function(a,b){return(a.d||"9").localeCompare(b.d||"9")});if(!l.length)return"";
+  return'<h3 class="sec">📝 การบ้านจากเลขา</h3><div class="card">'+l.map(function(x){return'<div class="an"><b>'+esc(x.s)+"</b> · "+esc(x.t)+(x.d?' <span class="badge">ส่ง '+dm(x.d)+"</span>":"")+' <button class="btn" style="padding:4px 10px;margin-left:6px" onclick="hwAdd('+HW.items.indexOf(x)+')">+ เพิ่มเข้างาน</button></div>'}).join("")+"</div>"}
+function hwAdd(i){var x=HW.items[i],s=addSubj(x.s);if(S.tasks.some(function(t){return t.subj===s&&t.title===x.t&&(t.due||"")===(x.d||"")})){toast("มีในงานของฉันแล้ว");return}S.tasks.push({id:Date.now(),subj:s,title:x.t,due:x.d||"",done:false,type:"task"});save();toast("เพิ่มเข้างานแล้ว ✅");render()}
+function feeH(){if(ROLE!=="stu"||!FEE.topics.length)return"";var me=KEY.slice(4),u=FEE.topics.filter(function(t){return(FEE.paid[me]||[]).indexOf(t.id)<0});
+  return'<h3 class="sec">💰 ค่าใช้จ่าย</h3><div class="card">'+(u.length?u.map(function(t){return'<div class="an">ยังไม่ได้จ่าย: <b>'+esc(t.t)+"</b>"+(t.a?" · "+esc(t.a)+" บาท":"")+"</div>"}).join(""):'<div class="empty" style="padding:6px">จ่ายครบแล้ว ✅</div>')+"</div>"}
+function vHw(){var h=S.hw;return'<h3 class="sec" style="margin-top:4px">📝 แจ้งการบ้าน</h3><div class="dash"><div><div class="card"><input id="hs" type="text" placeholder="วิชา (เช่น ค22101)"><input id="ht" type="text" placeholder="การบ้านอะไร"><div class="lbl">กำหนดส่ง</div><input id="hd" type="date"><button class="btn p" style="width:100%" onclick="hwPost()">+ เพิ่มการบ้าน</button></div></div><div><div class="card">'+(h.items.length?h.items.map(function(x,i){return'<div class="task" style="border-color:var(--ac)"><div class="t"><b>'+esc(x.s)+"</b> · "+esc(x.t)+(x.d?" · ส่ง "+dm(x.d):"")+'</div><button class="x" onclick="hwDel('+i+')">✕</button></div>'}).join(""):'<div class="empty">ยังไม่มีการบ้าน</div>')+'<div class="chips" style="margin-top:12px"><button class="btn p" onclick="hwPing()">🔔 เตือนเพื่อนๆ</button><button class="btn p" onclick="jDl(\'homework.json\',S.hw)">⬇️ homework.json</button></div></div></div></div>'}
+function hwPost(){var s=$("hs").value.trim(),t=$("ht").value.trim();if(!s||!t){toast("ใส่วิชากับการบ้านก่อนนะ");return}S.hw.items.push({id:Date.now(),s:s.slice(0,40),t:t.slice(0,150),d:$("hd").value});save();render();toast("เพิ่มแล้ว")}
+function hwDel(i){S.hw.items.splice(i,1);save();render()}
+function hwPing(){var l=S.hw.items[S.hw.items.length-1];if(!l){toast("ยังไม่มีการบ้าน");return}S.hw.ping={ts:Date.now(),text:"การบ้านใหม่ "+l.s+": "+l.t};save();toast("ตั้งแจ้งเตือนแล้ว ดาวน์โหลดไฟล์ไปอัปโหลดเพื่อส่งถึงเพื่อน")}
+function vFee(){var f=S.fee;return'<h3 class="sec" style="margin-top:4px">💰 เก็บเงิน</h3><div class="card"><div class="chips" style="margin:0"><input id="ft" type="text" placeholder="เก็บค่าอะไร (เช่น ค่าทัศนศึกษา)" style="flex:2;min-width:160px;margin:0"><input id="fa" type="text" inputmode="numeric" placeholder="บาท" style="flex:1;min-width:70px;margin:0"><button class="btn p" onclick="feeAdd()">+ เพิ่มหัวข้อ</button></div></div>'+(f.topics.length?'<div class="scroll"><table class="ft"><tr><th>เลขที่</th>'+f.topics.map(function(t,j){return"<th>"+esc(t.t)+(t.a?"<br><small>"+esc(t.a)+" บาท</small>":"")+'<br><button class="x" onclick="feePing('+j+')">🔔</button><button class="x" onclick="feeDel('+j+')">✕</button></th>'}).join("")+"</tr>"+SIDS.map(function(id){return"<tr><td><b>"+id+"</b></td>"+f.topics.map(function(t){var p=(f.paid[id]||[]).indexOf(t.id)>=0;return'<td><button class="pay'+(p?" y":"")+'" onclick="feeTog(\''+id+"',"+t.id+')">'+(p?"✓":"ค้าง")+"</button></td>"}).join("")+"</tr>"}).join("")+'</table></div><div class="chips" style="margin-top:12px"><button class="btn p" onclick="jDl(\'fees.json\',S.fee)">⬇️ fees.json</button></div>':'<div class="card empty" style="margin-top:12px">เพิ่มหัวข้อที่จะเก็บเงินก่อนนะ</div>')}
+function feeAdd(){var t=$("ft").value.trim();if(!t){toast("ใส่ชื่อหัวข้อก่อนนะ");return}S.fee.topics.push({id:Date.now(),t:t.slice(0,40),a:$("fa").value.trim().slice(0,10)});save();render()}
+function feeDel(j){if(!confirm("ลบหัวข้อนี้และข้อมูลการจ่ายของหัวข้อนี้?"))return;var id=S.fee.topics[j].id;S.fee.topics.splice(j,1);for(var k in S.fee.paid)S.fee.paid[k]=S.fee.paid[k].filter(function(x){return x!==id});save();render()}
+function feeTog(id,tid){var a=S.fee.paid[id]||(S.fee.paid[id]=[]),i=a.indexOf(tid);if(i<0)a.push(tid);else a.splice(i,1);save();render()}
+function feePing(j){var t=S.fee.topics[j];S.fee.ping={ts:Date.now(),tid:t.id,text:"ยังไม่ได้จ่าย "+t.t+(t.a?" "+t.a+" บาท":"")+" ติดต่อเหรัญญิกนะ"};save();toast("ตั้งแจ้งเตือนแล้ว ดาวน์โหลดไฟล์ไปอัปโหลดเพื่อส่งถึงคนที่ยังไม่จ่าย")}
+var ANN={chat:"",items:[]};
+function A(){return ROLE==="admin"&&S.ann?S.ann:ANN}
+function loadAnn(){fetch("announcements.json?"+Date.now()).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(j){ANN={chat:j.chat||"",items:Array.isArray(j.items)?j.items:[]};if(ROLE==="admin"&&S.ann&&!S.ann.items.length&&!S.ann.chat){S.ann={chat:ANN.chat,items:ANN.items.slice()};save()}if(KEY&&view==="home")render()}).catch(function(){})}
+function annH(){var a=A(),it=a.items.slice().sort(function(x,y){return(y.p?1:0)-(x.p?1:0)||(y.d||"").localeCompare(x.d||"")});
+  return'<h3 class="sec">📢 ประกาศ</h3>'+(/^https?:\/\//.test(a.chat||"")?'<a class="btn p chat" href="'+esc(a.chat)+'" target="_blank" rel="noopener">💬 เข้ากลุ่มพูดคุย</a>':"")+(it.length?'<div class="card">'+it.map(function(x){return'<div class="an"><b>'+(x.p?"📌 ":"")+esc(x.t)+'</b> <span class="mu" style="font-size:12px">'+(x.d?dm(x.d):"")+"</span><div>"+esc(x.b||"").replace(/\n/g,"<br>")+"</div></div>"}).join("")+"</div>":'<div class="card empty">ยังไม่มีประกาศ</div>')}
+function annAdd(){var t=$("at").value.trim();if(!t){toast("ใส่หัวข้อก่อนนะ");return}S.ann.items.push({id:Date.now(),t:t.slice(0,80),b:$("ab").value.trim().slice(0,1000),p:$("ap").checked,d:fmt(today())});save();toast("โพสต์แล้ว อย่าลืมดาวน์โหลดไฟล์ไปอัปโหลด");render()}
+function annDel(i){S.ann.items.splice(i,1);save();render()}
+function annChat(){S.ann.chat=$("ac").value.trim();save();toast("บันทึกลิงก์แล้ว")}
+function admExp(k){$("code").value=JSON.stringify(k?{v:1,chat:S.ann.chat||"",items:S.ann.items}:{v:1,tt:S.tt.map(function(l){return l.map(function(x){return{n:x.n,s:x.s,e:x.e,t:x.t,r:x.r}})})})}
+function admDl(k){admExp(k);var b=new Blob([$("code").value],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=k?"announcements.json":"timetable.json";document.body.appendChild(a);a.click();a.remove()}
+function vAdm(){var a=S.ann;return'<h3 class="sec" style="margin-top:4px">🛠 แอดมิน</h3><div class="dash"><div><div class="card"><b>📢 โพสต์ประกาศ</b><input id="at" type="text" placeholder="หัวข้อ" style="margin-top:10px"><textarea id="ab" placeholder="รายละเอียด"></textarea><div class="chips" style="margin:0"><label class="cb"><input type="checkbox" id="ap"> 📌 ปักหมุด</label><button class="btn p" onclick="annAdd()">+ โพสต์</button></div><div class="lbl" style="margin-top:14px">ลิงก์กลุ่มพูดคุย (LINE OpenChat, Discord ฯลฯ)</div><input id="ac" type="text" value="'+esc(a.chat||"")+'" placeholder="https://..." onchange="annChat()">'+a.items.map(function(x,i){return'<div class="task" style="border-color:var(--ac)"><div class="t">'+(x.p?"📌 ":"")+"<b>"+esc(x.t)+'</b></div><button class="x" onclick="annDel('+i+')">✕</button></div>'}).join("")+'</div></div><div><div class="card"><b>🔑 ช่วยเพื่อนที่ลืมรหัสผ่าน</b><p class="mu">ใส่เลขประจำตัวเพื่อน แล้วส่งรหัสให้เขา (ใช้ได้เฉพาะวันนี้) เพื่อนกด "ลืมรหัสผ่าน?" ที่หน้าเข้าสู่ระบบ แล้วตั้งรหัสใหม่</p><input id="rid" type="text" inputmode="numeric" placeholder="เลขประจำตัว"><button class="btn p" onclick="showRc()">ดูรหัสรีเซ็ต</button><div id="rc" style="font-size:20px;font-weight:700;margin-top:10px"></div></div><div class="card"><b>ส่งให้เพื่อนๆ</b><p class="mu">แก้ตารางที่แท็บ "ตารางเรียน" หรือโพสต์ประกาศ แล้วดาวน์โหลดไฟล์ไปอัปโหลดทับใน GitHub (ข้าง index.html) เพื่อนจะเห็นประกาศเมื่อเปิดแอป ส่วนตารางใหม่ เพื่อนที่ใช้อยู่แล้วต้องกด "ใช้ตารางล่าสุด" ในตั้งค่า</p><div class="chips"><button class="btn p" onclick="admDl(0)">⬇️ timetable.json</button><button class="btn p" onclick="admDl(1)">⬇️ announcements.json</button><button class="btn" onclick="cp()">📋 คัดลอก</button></div><textarea id="code" placeholder="เนื้อหาไฟล์จะขึ้นที่นี่"></textarea></div></div></div>'}
+var SH=["จ","อ","พ","พฤ","ศ","ส","อา"],ttSel=-1,PT=["08:40","09:30","10:20","11:10","12:00","12:50","13:40","14:30","15:20","16:10","17:00"];
+var PRE=[
+[[0,2,"ว22285","ครูธวลักษณ์","702 คอม2"],[2,1,"ค22101","ครูพิมพา","622"],[4,1,"อ22205","Robert","622"],[5,1,"ส22101","ครูนิธินันท์","622"],[6,1,"พ22103","ครูคำสิงห์","สนามฟุตบอล"],[7,1,"ท22101","ครูวณิชยา","622"],[8,1,"ง22101","ครูอภิเดช","คหกรรม2"]],
+[[0,2,"ว22211","ครูอรุณี สัง","622"],[2,1,"ค22211","ครูสุพัตรา","622"],[4,1,"พ22101","ครูณัฐพงษ์","622"],[5,1,"ค22101","ครูพิมพา","622"],[6,1,"อ22101","ครูเมธาวี","622"],[7,1,"ม.2 หอประชุม","","หอประชุม"],[8,1,"ส22103","ครูนิตยา","622"]],
+[[0,1,"ท22101","ครูวณิชยา","622"],[1,1,"ว22101","ครูทิวาพร","622"],[2,1,"ส22101","ครูนิธินันท์","622"],[4,1,"ก22901","ครูธัญกมล","622"],[5,1,"อ22101","ครูเมธาวี","622"],[6,1,"ค22101","ครูพิมพา","622"],[7,1,"ลส. นน. ยว. บพ.","",""],[8,1,"อ22209","Robert","622"]],
+[[0,1,"อ22101","ครูเมธาวี","622"],[1,2,"ค22209","ครูพิมพา","622"],[4,1,"ส22101","ครูนิธินันท์","622"],[5,1,"ท22101","ครูวณิชยา","622"],[6,1,"ค22203","ครูดรุณี","622"],[7,1,"ศ22101","ครูธีระยุทธ","ห้องจันทร์กระพ้อ"],[8,1,"ศ22103","ครูสุทธิกุล","ห้องดนตรี 1"],[9,1,"คณะสี","","622"]],
+[[0,1,"ว22261","ครูณัฐพล","622"],[1,1,"ค22203","ครูดรุณี","622"],[2,1,"ว22103","ครูวรลักษณ์","738 คอม5"],[4,1,"อ22205","Robert","622"],[5,2,"ว22101","ครูทิวาพร","622"],[7,1,"ชุมนุม","",""],[9,1,"ส.ประโยชน์","","622"]]];
 if(!S.tasks)S.tasks=[];if(!S.subjects)S.subjects=[];if(!S.tt||S.tt.length!==7)S.tt=[[],[],[],[],[],[],[]];
+S.tt=S.tt.map(function(l){return(l||[]).map(function(x){return typeof x==="string"?{n:x}:x})});
 function $(i){return document.getElementById(i)}
-function save(){try{localStorage.setItem("hw2",JSON.stringify(S))}catch(e){}}
+function save(){if(!KEY)return;try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function applyTT(a){a.forEach(function(l,i){S.tt[i]=(l||[]).map(function(x){return Array.isArray(x)?{n:addSubj(x[2]),s:x[0],e:x[1],t:x[3],r:x[4]}:{n:addSubj(x.n),s:x.s,e:x.e,t:x.t,r:x.r}})})}
+function ls(i){return S.tt[i].slice().sort(function(a,b){return(a.s||0)-(b.s||0)})}
+function lesH(x,d){
+  var tm=x.s==null?"–":"<b>"+PT[x.s]+"</b>"+PT[x.s+(x.e||1)];
+  if(x.brk)return'<div class="les brk"><div class="bar"></div><div class="tm">'+tm+'</div><div class="bd"><div class="nm">☕ พักกลางวัน</div></div></div>';
+  return'<div class="les"><div class="bar" style="background:'+col(x.n)+'"></div><div class="tm">'+tm+'</div><div class="bd"><div class="nm">'+esc(x.n)+'</div><div class="sub">'+esc([x.t,x.r].filter(Boolean).join(" · "))+"</div></div>"+(d==null?"":'<button class="x" onclick="rmC('+d+","+S.tt[d].indexOf(x)+')" aria-label="ลบ">✕</button>')+"</div>";
+}
 function addSubj(n){n=String(n).trim().slice(0,40);if(!n)return"";if(!S.subjects.some(function(s){return s.n===n}))S.subjects.push({n:n,h:HUES[S.subjects.length%HUES.length]});return n}
 S.tasks.forEach(function(t){addSubj(t.subj)});
 function col(n){var h=220;S.subjects.forEach(function(s){if(s.n===n)h=s.h});return"hsl("+h+" 70% 55%)"}
@@ -140,22 +257,24 @@ function vHome(){
   var urg=pend.filter(function(t){return t.due&&diff(t.due)<=1}).sort(sortT);
   var ex=S.tasks.filter(function(t){return isEx(t)&&diff(t.due)>=0&&diff(t.due)<=7}).sort(sortT);
   var dn=td.toLocaleDateString("th-TH",{weekday:"long",day:"numeric",month:"long"});
-  function cl(i){var l=S.tt[i];return l.length?l.map(function(n){return'<span class="cb"><i style="background:'+col(n)+'"></i>'+esc(n)+"</span>"}).join(""):'<span class="mu">ยังไม่ได้ลงตารางเรียน</span>'}
-  var h='<div class="hero"><div class="top"><button onclick="askNotif()" aria-label="แจ้งเตือน">🔔</button><button onclick="go(\'set\')" aria-label="ตั้งค่า">⚙️</button></div><h2>สวัสดี 👋</h2><p>'+dn+'</p><div class="stats"><div class="stat"><b>'+pend.length+'</b><span>งานค้างทั้งหมด</span></div><div class="stat"><b>'+urg.length+'</b><span>ต้องรีบ</span></div><div class="stat"><b>'+ex.length+'</b><span>สอบใน 7 วัน</span></div></div></div>';
+  function cl(i){var l=ls(i);return l.length?l.map(function(x){return lesH(x)}).join(""):'<span class="mu">ไม่มีเรียน 🎉</span>'}
+  var h='<div class="hero"><div class="top"><button onclick="askNotif()" aria-label="แจ้งเตือน">🔔</button><button onclick="go(\'set\')" aria-label="ตั้งค่า">⚙️</button><button onclick="logout()" aria-label="ออกจากระบบ">🚪</button></div><h2>สวัสดี '+esc(uname())+' 👋</h2><p>'+dn+'</p><div class="stats"><div class="stat"><b>'+pend.length+'</b><span>งานค้างทั้งหมด</span></div><div class="stat"><b>'+urg.length+'</b><span>ต้องรีบ</span></div><div class="stat"><b>'+ex.length+'</b><span>สอบใน 7 วัน</span></div></div></div>';
+  h+='<div class="dash"><div>';
   h+='<h3 class="sec">⚠️ ต้องรีบทำ</h3>'+(urg.length||ex.length?'<div class="card">'+urg.map(function(t){return row(t,1)}).join("")+ex.map(function(t){return row(t,1)}).join("")+"</div>":'<div class="card empty">ไม่มีงานด่วน สบายใจได้ ✅</div>');
+  h+=annH()+hwH()+feeH()+"</div><div>";
   h+='<h3 class="sec">📅 วันนี้เรียน</h3><div class="card"><div class="chips" style="margin:0">'+cl(dow(td))+'</div></div>';
   h+='<h3 class="sec">🌙 พรุ่งนี้เรียน</h3><div class="card"><div class="chips" style="margin:0">'+cl((dow(td)+1)%7)+"</div></div>";
-  return h;
+  return h+"</div></div>";
 }
 function vTasks(){
   var h='<h3 class="sec" style="margin-top:4px">📖 งานแยกตามวิชา</h3><div class="chips"><button class="cb'+(flt?"":" on")+'" onclick="flt=\'\';render()">ทั้งหมด</button>'+S.subjects.map(function(s,i){return'<button class="cb'+(flt===s.n?" on":"")+'" onclick="setF('+i+')"><i style="background:'+col(s.n)+'"></i>'+esc(s.n)+"</button>"}).join("")+"</div>";
   var subs=S.subjects.filter(function(s){return!flt||s.n===flt}),any=false;
-  subs.forEach(function(s){
+  h+='<div class="mas">';subs.forEach(function(s){
     var l=S.tasks.filter(function(t){return t.subj===s.n}).sort(sortT);if(!l.length)return;any=true;
     var left=l.filter(function(t){return!t.done&&!isEx(t)}).length;
     h+='<div class="card"><div class="sh3"><span class="dot" style="background:'+col(s.n)+'"></span><b>'+esc(s.n)+'</b><span class="badge">ค้าง '+left+"</span></div>"+l.map(function(t){return row(t,0)}).join("")+"</div>";
   });
-  if(!any)h+='<div class="empty">ยังไม่มีงาน กดปุ่ม + มุมขวาล่างเพื่อเพิ่ม</div>';
+  h+="</div>";if(!any)h+='<div class="empty">ยังไม่มีงาน กดปุ่ม + มุมขวาล่างเพื่อเพิ่ม</div>';
   return h;
 }
 function setF(i){flt=S.subjects[i].n;render()}
@@ -170,12 +289,12 @@ function vCal(){
   return h+"</div></div>";
 }
 function vTT(){
-  var td=dow(today());
-  var h='<h3 class="sec" style="margin-top:4px">🏫 ตารางเรียน</h3><p class="mu" style="margin-top:0">อัปโหลดรูปตารางเรียนให้ระบบอ่านชื่อวิชา หรือกด + ในแต่ละวันเพื่อเลือกวิชาเอง</p><button class="btn p" style="margin-bottom:12px" onclick="pickImg()">📷 อัปโหลดรูปตารางเรียน</button> <button class="btn" style="margin-bottom:12px;color:var(--rd)" onclick="askClr(\'tt\',0)">🗑 ล้างตารางทั้งหมด</button><div class="scroll"><div class="grid">';
-  for(var i=0;i<7;i++){
-    h+='<div class="day'+(i===td?" now":"")+'"><h4>'+DAYS[i]+"</h4>"+S.tt[i].map(function(n,j){return'<div class="pc" style="border-color:'+col(n)+'"><span><span class="mu">'+(j+1)+".</span> "+esc(n)+'</span><button class="x" style="padding:0 2px" onclick="rmC('+i+","+j+')">✕</button></div>'}).join("")+'<button class="addc" onclick="openCls('+i+')">+ เพิ่มวิชา</button>'+(S.tt[i].length?'<button class="addc" style="margin-top:6px;border-style:solid;color:var(--rd)" onclick="askClr(\'day\','+i+')">🗑 ล้างวันนี้</button>':"")+'</div>';
-  }
-  return h+"</div></div>";
+  var td=dow(today());if(ttSel<0)ttSel=td;
+  var h='<h3 class="sec" style="margin-top:4px">🏫 ตารางเรียน</h3><div class="tabs">'+SH.map(function(n,i){return'<button class="tab'+(i===ttSel?" on":"")+(i===td?" now":"")+'" onclick="ttSel='+i+';render()">'+n+"</button>"}).join("")+'</div><div class="lbl" style="margin-bottom:8px">วัน'+DAYS[ttSel]+'</div>';
+  var l=ls(ttSel);if(l.length)l.push({brk:1,s:3,e:1});l.sort(function(a,b){return(a.s||0)-(b.s||0)});
+  h+=l.length?l.map(function(x){return lesH(x,ttSel)}).join(""):'<div class="card empty">วัน'+DAYS[ttSel]+'ยังไม่มีวิชา</div>';
+  h+='<div class="chips" style="margin-top:12px"><button class="btn p" onclick="openCls('+ttSel+')">+ เพิ่มวิชา</button>'+(S.tt[ttSel].length?'<button class="btn" style="color:var(--rd)" onclick="askClr(\'day\','+ttSel+')">🗑 ล้างวันนี้</button>':"")+"</div>";
+  return h;
 }
 
 function askClr(k,i){
@@ -203,12 +322,13 @@ function vExam(){
   return h;
 }
 function vSet(){
-  var h='<h3 class="sec" style="margin-top:4px">⚙️ ตั้งค่า</h3><div class="card"><b>วิชาของฉัน</b> <button class="btn" style="margin-left:6px" onclick="pickImg()">📷 จากรูปตารางเรียน</button><div class="chips">'+S.subjects.map(function(s,i){return'<span class="cb"><i style="background:'+col(s.n)+'"></i>'+esc(s.n)+' <button class="x" style="padding:0 2px" onclick="rmS('+i+')">✕</button></span>'}).join("")+'</div><input id="nsub" type="text" placeholder="พิมพ์ชื่อวิชาใหม่" autocomplete="off"><button class="btn p" onclick="addS()">+ เพิ่มวิชา</button> <button class="btn" style="color:var(--rd)" onclick="askClr(\'sub\',0)">🗑 ล้างวิชาทั้งหมด</button></div>';
+  var h='<h3 class="sec" style="margin-top:4px">⚙️ ตั้งค่า</h3><div class="card"><b>วิชาของฉัน</b> <div class="chips">'+S.subjects.map(function(s,i){return'<span class="cb"><i style="background:'+col(s.n)+'"></i>'+esc(s.n)+' <button class="x" style="padding:0 2px" onclick="rmS('+i+')">✕</button></span>'}).join("")+'</div><input id="nsub" type="text" placeholder="พิมพ์ชื่อวิชาใหม่" autocomplete="off"><button class="btn p" onclick="addS()">+ เพิ่มวิชา</button> <button class="btn" style="color:var(--rd)" onclick="askClr(\'sub\',0)">🗑 ล้างวิชาทั้งหมด</button></div>';
+  h+='<div class="card"><b>👤 บัญชี</b><p class="mu">'+(ROLE!=="stu"?"โหมด"+uname():uname()+" · เลขประจำตัว "+KEY.slice(4))+'</p><div class="chips" style="margin:0">'+(ROLE!=="stu"?"":'<button class="btn" onclick="pullAsk()">🔄 ใช้ตารางล่าสุดจากแอดมิน</button>')+'<button class="btn" onclick="logout()">ออกจากระบบ</button></div></div>';
   h+='<div class="card"><b>🤝 แชร์ / นำเข้า</b><p class="mu">สร้างรหัสส่งให้เพื่อนทางแชต เพื่อนวางรหัสแล้วกดนำเข้า จะได้วิชา ตารางเรียน และตารางสอบเหมือนเรา (หรือวางรหัสตารางเรียนที่ได้จากแชต Claude)</p><div class="chips"><button class="btn" onclick="exp(0)">รหัส: ทั้งหมด</button><button class="btn" onclick="exp(1)">รหัส: ตารางเรียน</button><button class="btn" onclick="exp(2)">รหัส: ตารางสอบ</button></div><textarea id="code" placeholder="รหัสจะขึ้นที่นี่ หรือวางรหัสที่ได้รับ"></textarea><div class="chips" style="margin:0"><button class="btn" onclick="cp()">📋 คัดลอก</button><button class="btn p" onclick="imp()">⬇️ นำเข้า</button></div></div>';
   return h;
 }
 function addS(){var v=$("nsub").value;if(!v.trim())return;addSubj(v);save();render()}
-function rmS(i){var n=S.subjects[i].n;if(S.tasks.some(function(t){return t.subj===n})){toast("ลบงานของวิชานี้ก่อนนะ");return}S.subjects.splice(i,1);S.tt=S.tt.map(function(l){return l.filter(function(x){return x!==n})});save();render()}
+function rmS(i){var n=S.subjects[i].n;if(S.tasks.some(function(t){return t.subj===n})){toast("ลบงานของวิชานี้ก่อนนะ");return}S.subjects.splice(i,1);S.tt=S.tt.map(function(l){return l.filter(function(x){return x.n!==n})});save();render()}
 function exp(m){
   var it=S.tasks.filter(function(t){return m===2?isEx(t):m===0}).map(function(t){return{s:t.subj,t:t.title,d:t.due,y:t.type||"task"}});
   var o={v:2,sub:S.subjects.map(function(s){return s.n}),tt:m===2?[[],[],[],[],[],[],[]]:S.tt,items:m===1?[]:it};
@@ -220,7 +340,7 @@ function imp(){
   var v=$("code").value.trim(),o,n=0;
   try{o=JSON.parse(decodeURIComponent(escape(atob(v))));if(Array.isArray(o))o={items:o}}catch(e){toast("รหัสไม่ถูกต้อง");return}
   (o.sub||[]).forEach(addSubj);
-  if(Array.isArray(o.tt)&&o.tt.length===7)o.tt.forEach(function(l,i){if(Array.isArray(l)&&l.length)S.tt[i]=l.map(addSubj).filter(Boolean)});
+  if(Array.isArray(o.tt)&&o.tt.length===7)o.tt.forEach(function(l,i){if(Array.isArray(l)&&l.length)S.tt[i]=l.map(function(x){x=typeof x==="string"?{n:x}:x;x.n=addSubj(x.n);return x.n?x:null}).filter(Boolean)});
   (o.items||[]).forEach(function(x,i){
     if(!x||!x.s||!x.t)return;var y=x.y==="exam"?"exam":"task",s=addSubj(x.s);
     if(S.tasks.some(function(t){return t.subj===s&&t.title===x.t&&(t.due||"")===(x.d||"")&&(t.type||"task")===y}))return;
@@ -248,47 +368,25 @@ function submitAdd(){
   toast(form.type==="exam"?"เพิ่มวันสอบแล้ว 🎓":"เพิ่มงานแล้ว ✅");render();
 }
 function openCls(d){
-  ttDay=d;
-  sheet('<h3>เพิ่มวิชาวัน'+DAYS[d]+'</h3><div class="lbl">แตะเลือกวิชา</div><div class="chips">'+chipsHtml("pickC")+'</div><input id="ns" type="text" placeholder="หรือพิมพ์วิชาใหม่" autocomplete="off"><button class="btn p" style="width:100%" onclick="addC()">เพิ่มวิชานี้</button>');
+  ttDay=d;var o=PT.slice(0,10).map(function(t,k){return'<option value="'+k+'">คาบ '+(k+1)+" · "+t+"</option>"}).join("");
+  sheet('<h3>เพิ่มวิชาวัน'+DAYS[d]+'</h3><div class="lbl">แตะเลือกวิชา</div><div class="chips">'+chipsHtml("pickC")+'</div><input id="ns" type="text" placeholder="หรือพิมพ์วิชาใหม่" autocomplete="off"><div class="lbl">คาบเรียน</div><select id="pp">'+o+'</select><button class="btn p" style="width:100%" onclick="addC()">เพิ่มวิชานี้</button>');
 }
-function pickC(i){S.tt[ttDay].push(S.subjects[i].n);save();closeS();render()}
-function addC(){var n=addSubj($("ns").value);if(!n){toast("พิมพ์ชื่อวิชาก่อนนะ");return}S.tt[ttDay].push(n);save();closeS();render()}
-
-/* OCR timetable */
-var cand=[];
-function loadTess(cb){if(window.Tesseract)return cb();var t=document.createElement("script");t.src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js";t.onload=cb;t.onerror=function(){closeS();toast("โหลดตัวอ่านรูปไม่ได้ ตรวจอินเทอร์เน็ตแล้วลองใหม่")};document.head.appendChild(t)}
-function pickImg(){$("img").click()}
-function onImg(e){
-  var f=e.target.files[0];e.target.value="";if(!f)return;
-  sheet('<h3>กำลังอ่านรูป…</h3><p class="mu" id="pg">กำลังโหลดตัวอ่านรูป (ครั้งแรกอาจนาน 1 นาที)</p>');
-  loadTess(function(){
-    Tesseract.recognize(f,"tha+eng",{logger:function(m){var p=$("pg");if(p&&m.status)p.textContent=m.status+(m.progress?" "+Math.round(m.progress*100)+"%":"")}}).then(function(r){showCand(r.data.text)}).catch(function(){sheet('<h3>อ่านรูปไม่สำเร็จ</h3><p class="mu">ลองใช้รูปที่ชัดและตรงขึ้น หรือส่งรูปให้ Claude ในแชตแล้วนำเข้าด้วยรหัส</p><button class="btn" onclick="closeS()">ปิด</button>')});
-  });
-}
-function showCand(text){
-  var seen={};cand=[];
-  text.split(/[\s|_=\[\]{}<>~`]+/).forEach(function(w){
-    if(w.length<2||w.length>30||!/[A-Za-z\u0E00-\u0E7F]{2}/.test(w)||seen[w])return;seen[w]=1;cand.push(w);
-  });
-  cand=cand.slice(0,150);
-  sheet('<h3>เลือกชื่อวิชาจากรูป</h3><p class="mu">แตะคำที่เป็นชื่อวิชา (ชื่อยาวแตะหลายคำต่อกันได้ และแก้ในช่องได้) แล้วกด "เพิ่มวิชานี้" ทำซ้ำจนครบ</p><input id="ns" type="text" placeholder="ชื่อวิชา" autocomplete="off"><button class="btn p" style="width:100%" onclick="addTok()">+ เพิ่มวิชานี้</button><div class="chips" id="added"></div><div class="lbl">คำที่อ่านได้จากรูป'+(cand.length?"":" (ไม่พบข้อความ ลองรูปที่ชัดขึ้น)")+'</div><div class="chips">'+cand.map(function(w,i){return'<button class="cb" onclick="tokP('+i+')">'+esc(w)+"</button>"}).join("")+'</div><button class="btn" style="width:100%" onclick="closeS();render()">เสร็จ</button>');
-}
-function tokP(i){var n=$("ns");n.value=(n.value+" "+cand[i]).trim()}
-function addTok(){var n=addSubj($("ns").value);if(!n){toast("แตะคำหรือพิมพ์ชื่อวิชาก่อนนะ");return}save();$("ns").value="";$("added").insertAdjacentHTML("beforeend",'<span class="cb on">✓ '+esc(n)+"</span>")}
+function pickC(i){$("ns").value=S.subjects[i].n}
+function addC(){var n=addSubj($("ns").value);if(!n){toast("เลือกหรือพิมพ์ชื่อวิชาก่อนนะ");return}S.tt[ttDay].push({n:n,s:+$("pp").value,e:1});save();closeS();render()}
 $("fab").onclick=openAdd;
 /* nav + render */
 var NAV=[["home","🏠","หน้าแรก"],["tasks","📖","งาน"],["tt","🏫","ตารางเรียน"],["cal","🗓️","ปฏิทิน"],["exam","🎓","สอบ"]];
 function go(v){view=v;render();$("main").scrollTop=0}
 function render(){
-  $("nav").innerHTML='<div class="logo">📚 งานค้าง</div>'+NAV.map(function(n){return'<button class="'+(view===n[0]?"on":"")+'" onclick="go(\''+n[0]+'\')"><span>'+n[1]+"</span>"+n[2]+"</button>"}).join("");
-  var f={home:vHome,tasks:vTasks,cal:vCal,tt:vTT,exam:vExam,set:vSet}[view];
+  $("nav").innerHTML='<div class="logo">📚 งานค้าง</div>'+NAV.concat(EXTRA[ROLE]||[]).map(function(n){return'<button class="'+(view===n[0]?"on":"")+'" onclick="go(\''+n[0]+'\')"><span>'+n[1]+"</span>"+n[2]+"</button>"}).join("")+'<div class="who"><b>'+esc(uname())+'</b><button onclick="logout()">🚪 ออกจากระบบ</button></div>';
+  var f={hw:vHw,fee:vFee,adm:vAdm,home:vHome,tasks:vTasks,cal:vCal,tt:vTT,exam:vExam,set:vSet}[view];
   $("main").innerHTML=f();
 }
 function askNotif(){
   if(!("Notification" in window)){toast("เบราว์เซอร์นี้ไม่รองรับการแจ้งเตือน");return}
   Notification.requestPermission().then(function(p){if(p==="granted"){notify(true);toast("เปิดแจ้งเตือนแล้ว")}else toast("ยังไม่ได้อนุญาตการแจ้งเตือน")});
 }
-function notify(force){
+function notify(force){if(!KEY)return;
   if(!("Notification" in window)||Notification.permission!=="granted")return;
   var key="hwn"+fmt(today()),dn=false;try{dn=localStorage.getItem(key)}catch(e){}
   if(dn&&!force)return;
@@ -297,8 +395,8 @@ function notify(force){
   new Notification("📚 มีเรื่องต้องรีบ "+u.length+" รายการ",{body:u.slice(0,4).map(function(t){return(isEx(t)?"สอบ ":"")+t.subj+": "+t.title}).join("\n")});
   try{localStorage.setItem(key,"1")}catch(e){}
 }
-save();render();notify(false);
-setInterval(function(){if($("ov").className!=="on"&&view!=="set")render();notify(false)},60000);
+start();
+setInterval(function(){if(KEY&&ROLE==="stu")pollAll();if(KEY&&$("ov").className!=="on"&&view!=="set"&&view!=="adm"&&view!=="hw"&&view!=="fee")render();notify(false)},60000);
 </script>
 </body>
 </html>
