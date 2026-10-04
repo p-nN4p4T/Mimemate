@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>ตัวจัดการงานค้าง</title>
+<title>MimeMine</title>
 <meta name="theme-color" content="#4f6bed">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="งานค้าง">
+<meta name="apple-mobile-web-app-title" content="MimeMine">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#f3f4fa;--card:#fff;--tx:#1b2030;--mu:#6b7280;--bd:#e4e7f0;--ac:#5468f0;--ac2:#8b5cf6;--rd:#e5484d;--or:#f59e0b;--gr:#22a06b;--sh:0 2px 10px rgba(30,40,90,.07)}
@@ -117,10 +117,11 @@ input[type=password]{width:100%;padding:12px;border:1.5px solid var(--bd);border
 .les,.tabs{max-width:760px}
 .ft{border-collapse:collapse;background:var(--card);font-size:14px;margin-top:12px}.ft th,.ft td{border:1px solid var(--bd);padding:6px 10px;text-align:center;white-space:nowrap}.ft th{position:sticky;top:0;background:var(--card)}
 .pay{border:none;border-radius:8px;padding:5px 12px;background:color-mix(in srgb,var(--rd) 18%,var(--card));color:var(--rd)}.pay.y{background:color-mix(in srgb,var(--gr) 20%,var(--card));color:var(--gr)}
+.pw{position:relative}.pw input{padding-right:48px}.eye{position:absolute;right:4px;top:3px;border:none;background:none;color:var(--mu);padding:9px;line-height:0}
 </style>
 </head>
 <body>
-<div id="lg"><div class="lgc"><div style="font-size:44px">📚</div><h2 style="margin:6px 0 14px">ตัวจัดการงานค้าง</h2><div class="seg" id="lgt"><button class="cb on" id="t1" onclick="lgMode(1)">เข้าสู่ระบบ</button><button class="cb" id="t2" onclick="lgMode(2)">สมัครใช้งาน</button></div><select id="lgr" style="display:none"><option value="admin">แอดมิน</option><option value="sec">ฝ่ายเลขา</option><option value="tre">ฝ่ายเหรัญญิก</option></select><input id="lgn" type="text" placeholder="ชื่อที่อยากให้เรียก" maxlength="30" autocomplete="off" style="display:none"><input id="lgi" type="text" inputmode="numeric" placeholder="เลขประจำตัวนักเรียน" autocomplete="off"><input id="lgp" type="password" placeholder="รหัสผ่าน" autocomplete="off" onkeydown="if(event.key==='Enter')doLogin()"><button class="btn p" style="width:100%" id="lgb" onclick="doLogin()">เข้าสู่ระบบ</button><p style="margin:16px 0 0;font-size:14px"><a href="#" id="lgf" onclick="lgMode(lgM===4?1:4);return false" style="color:var(--ac)">ลืมรหัสผ่าน?</a><br><a href="#" id="lga" onclick="lgMode(lgM===3?1:3);return false" style="color:var(--ac);display:inline-block;margin-top:8px">เข้าสู่ระบบเจ้าหน้าที่</a></p></div></div>
+<div id="lg"><div class="lgc"><div style="font-size:44px">📚</div><h2 style="margin:6px 0 14px">MimeMine</h2><div class="seg" id="lgt"><button class="cb on" id="t1" onclick="lgMode(1)">เข้าสู่ระบบ</button><button class="cb" id="t2" onclick="lgMode(2)">สมัครใช้งาน</button></div><select id="lgr" style="display:none"><option value="admin">แอดมิน</option><option value="sec">ฝ่ายเลขา</option><option value="tre">ฝ่ายเหรัญญิก</option></select><input id="lgn" type="text" placeholder="ชื่อที่อยากให้เรียก" maxlength="30" autocomplete="off" style="display:none"><input id="lgi" type="text" inputmode="numeric" placeholder="เลขประจำตัวนักเรียน" autocomplete="off"><div class="pw"><input id="lgp" type="password" placeholder="รหัสผ่าน" autocomplete="off" onkeydown="if(event.key==='Enter')doLogin()"><button type="button" class="eye" onclick="eye()" aria-label="แสดงรหัส"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg></button></div><button class="btn p" style="width:100%" id="lgb" onclick="doLogin()">เข้าสู่ระบบ</button><p style="margin:16px 0 0;font-size:14px"><a href="#" id="lgf" onclick="lgMode(lgM===4?1:4);return false" style="color:var(--ac)">ลืมรหัสผ่าน?</a><br><a href="#" id="lga" onclick="lgMode(lgM===3?1:3);return false" style="color:var(--ac);display:inline-block;margin-top:8px">เข้าสู่ระบบเจ้าหน้าที่</a></p></div></div>
 <div id="app">
   <nav id="nav"></nav>
   <main id="main"></main>
@@ -139,7 +140,7 @@ function loadS(){S={tasks:[],subjects:[],tt:[[],[],[],[],[],[],[]]};try{var r=lo
   if(!S.tasks)S.tasks=[];if(!S.subjects)S.subjects=[];if(!S.tt||S.tt.length!==7)S.tt=[[],[],[],[],[],[],[]];
   S.tt=S.tt.map(function(l){return(l||[]).map(function(x){return typeof x==="string"?{n:x}:x})});S.tasks.forEach(function(t){addSubj(t.subj)})}
 function login(id){ROLE=({admin:"admin",sec:"sec",tre:"tre"})[id]||"stu";KEY="hw2_"+id;loadS();if(ROLE==="admin"&&!S.ann)S.ann={chat:"",items:[]};if(ROLE==="sec"&&!S.hw)S.hw={items:[],ping:null};if(ROLE==="tre"&&!S.fee)S.fee={topics:[],paid:{},ping:null};pollAll();$("lg").style.display="none";$("lgp").value="";
-  if(ROLE==="admin"){if(!S.tt.some(function(l){return l.length}))applyTT(PRE)}else if(ROLE==="stu"&&!S.dflt)pullDef(1);
+  if(ROLE==="admin"){if(!S.tt.some(function(l){return l.length}))applyTT(PRE)}else if(ROLE==="stu"){var pd=takePend();if(pd){applyTT(pd);S.dflt=1;S.dver="link";toast("ใส่ตารางเรียนจากลิงก์แล้ว 🎉")}else if(!S.dflt)pullDef(1)};
   save();view="home";render();notify(false)}
 var lgM=1;
 function lgMode(m){lgM=m;var st=m===3;$("t1").className="cb"+(m===1?" on":"");$("t2").className="cb"+(m===2?" on":"");$("lgt").style.display=st||m===4?"none":"";$("lgn").style.display=m===2||m===4?"":"none";$("lgn").placeholder=m===4?"รหัสรีเซ็ตจากแอดมิน":"ชื่อที่อยากให้เรียก";$("lgi").style.display=st?"none":"";$("lgr").style.display=st?"":"none";$("lgp").placeholder=st?"รหัสเจ้าหน้าที่":m===4?"รหัสผ่านใหม่":"รหัสผ่าน";$("lgb").textContent=["","เข้าสู่ระบบ","สมัครและเข้าใช้งาน","เข้าสู่ระบบเจ้าหน้าที่","ตั้งรหัสผ่านใหม่"][m];$("lga").textContent=st?"← กลับ":"เข้าสู่ระบบเจ้าหน้าที่";$("lgf").textContent=m===4?"← กลับ":"ลืมรหัสผ่าน?";$("lgp").value=""}
@@ -161,7 +162,7 @@ function doLogin(){
   hp(p).then(function(h){if(h!==A[v].h){toast("รหัสผ่านไม่ถูกต้อง");return}enter(v)})}
 function logout(){try{localStorage.removeItem("hwu")}catch(e){}KEY=null;ROLE="";["lgn","lgi","lgp"].forEach(function(i){$(i).value=""});lgMode(1);$("lg").style.display="flex"}
 function start(){var u=sess();if(u&&accs()[u])login(u)}
-function pullDef(auto){fetch("timetable.json?"+Date.now()).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(j){if(!j||!Array.isArray(j.tt))throw 0;applyTT(j.tt);S.dflt=1;save();render();toast(auto?"ใส่ตารางเรียนเริ่มต้นให้แล้ว 🎉":"อัปเดตตารางล่าสุดแล้ว")}).catch(function(){toast("โหลดตารางเริ่มต้นไม่ได้ ลองใหม่ทีหลังนะ")})}
+function pullDef(auto){fetch("timetable.json?"+Date.now()).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(j){if(!j||!Array.isArray(j.tt))throw 0;applyTT(j.tt);S.dflt=1;S.dver=j.ver||S.dver;save();render();toast(auto?"ใส่ตารางเรียนเริ่มต้นให้แล้ว 🎉":"อัปเดตตารางล่าสุดแล้ว")}).catch(function(){if(auto&&!S.tt.some(function(l){return l.length})){applyTT(PRE);save();render()}toast("โหลดตารางจากแอดมินไม่ได้ ใช้ตารางสำรองให้ก่อน")})}
 function pullAsk(){if(confirm("ตารางเรียนเดิมจะถูกแทนที่ด้วยตารางล่าสุดจากแอดมิน ตกลงไหม?"))pullDef(0)}
 var STAFF="esmt_0014!!",EXTRA={admin:[["adm","🛠","แอดมิน"]],sec:[["hw","📝","การบ้าน"]],tre:[["fee","💰","เก็บเงิน"]]},HW={items:[],ping:null},FEE={topics:[],paid:{},ping:null},SIDS=[];
 for(var q=SMIN;q<=SMAX;q++)SIDS.push(""+q);
@@ -172,7 +173,9 @@ function jDl(f,o){var b=new Blob([JSON.stringify(o)],{type:"application/json"}),
 function ping(p,k,ok){if(ROLE!=="stu"||!p||!p.ts)return;var key=KEY+k,last=0;try{last=+localStorage.getItem(key)||0}catch(e){}if(p.ts<=last)return;try{localStorage.setItem(key,p.ts)}catch(e){}if(!ok)return;toast("🔔 "+p.text);try{if(window.Notification&&Notification.permission==="granted")new Notification("🔔 "+p.text)}catch(e){}}
 function loadHW(){jget("homework.json",function(j){HW={items:j.items||[],ping:j.ping||null};if(ROLE==="sec"&&S.hw&&!S.hw.items.length&&!S.hw.ping){S.hw.items=HW.items.slice();save()}if(KEY&&view==="home")render();ping(HW.ping,"pH",1)})}
 function loadFee(){jget("fees.json",function(j){FEE={topics:j.topics||[],paid:j.paid||{},ping:j.ping||null};if(ROLE==="tre"&&S.fee&&!S.fee.topics.length){S.fee={topics:FEE.topics.slice(),paid:JSON.parse(JSON.stringify(FEE.paid)),ping:null};save()}if(KEY&&view==="home")render();var p=FEE.ping,me=KEY.slice(4);ping(p,"pF",p&&(!p.tid||(FEE.topics.some(function(t){return t.id===p.tid})&&(FEE.paid[me]||[]).indexOf(p.tid)<0)))})}
-function pollAll(){loadAnn();loadHW();loadFee()}
+function eye(){var p=$("lgp"),on=p.type==="password";p.type=on?"text":"password";document.querySelector(".eye").innerHTML='<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/>'+(on?'<path d="M3 3l18 18"/>':"")+"</svg>"}
+function loadTT(){if(ROLE!=="stu")return;jget("timetable.json",function(j){if(!j||!Array.isArray(j.tt)||!j.ver||!S.dflt||S.dver===j.ver||S.dver==="link")return;applyTT(j.tt);S.dver=j.ver;save();render();toast("แอดมินอัปเดตตารางเรียนแล้ว 🔄")})}
+function pollAll(){loadTT();loadAnn();loadHW();loadFee()}
 function hwH(){var l=HW.items.slice().sort(function(a,b){return(a.d||"9").localeCompare(b.d||"9")});if(!l.length)return"";
   return'<h3 class="sec">📝 การบ้านจากเลขา</h3><div class="card">'+l.map(function(x){return'<div class="an"><b>'+esc(x.s)+"</b> · "+esc(x.t)+(x.d?' <span class="badge">ส่ง '+dm(x.d)+"</span>":"")+' <button class="btn" style="padding:4px 10px;margin-left:6px" onclick="hwAdd('+HW.items.indexOf(x)+')">+ เพิ่มเข้างาน</button></div>'}).join("")+"</div>"}
 function hwAdd(i){var x=HW.items[i],s=addSubj(x.s);if(S.tasks.some(function(t){return t.subj===s&&t.title===x.t&&(t.due||"")===(x.d||"")})){toast("มีในงานของฉันแล้ว");return}S.tasks.push({id:Date.now(),subj:s,title:x.t,due:x.d||"",done:false,type:"task"});save();toast("เพิ่มเข้างานแล้ว ✅");render()}
@@ -187,6 +190,10 @@ function feeAdd(){var t=$("ft").value.trim();if(!t){toast("ใส่ชื่อ
 function feeDel(j){if(!confirm("ลบหัวข้อนี้และข้อมูลการจ่ายของหัวข้อนี้?"))return;var id=S.fee.topics[j].id;S.fee.topics.splice(j,1);for(var k in S.fee.paid)S.fee.paid[k]=S.fee.paid[k].filter(function(x){return x!==id});save();render()}
 function feeTog(id,tid){var a=S.fee.paid[id]||(S.fee.paid[id]=[]),i=a.indexOf(tid);if(i<0)a.push(tid);else a.splice(i,1);save();render()}
 function feePing(j){var t=S.fee.topics[j];S.fee.ping={ts:Date.now(),tid:t.id,text:"ยังไม่ได้จ่าย "+t.t+(t.a?" "+t.a+" บาท":"")+" ติดต่อเหรัญญิกนะ"};save();toast("ตั้งแจ้งเตือนแล้ว ดาวน์โหลดไฟล์ไปอัปโหลดเพื่อส่งถึงคนที่ยังไม่จ่าย")}
+(function(){var m=/[#&]tt=([^&]+)/.exec(location.hash);if(m){try{localStorage.setItem("hwpend",m[1])}catch(e){}try{history.replaceState(null,"",location.pathname+location.search)}catch(e){}}})();
+function takePend(){try{var c=localStorage.getItem("hwpend");if(!c)return null;localStorage.removeItem("hwpend");var a=JSON.parse(decodeURIComponent(escape(atob(decodeURIComponent(c)))));return Array.isArray(a)?a:null}catch(e){return null}}
+function admLink(){var a=S.tt.map(function(l){return ls2(l).map(function(x){return[x.s||0,x.e||1,x.n,x.t||"",x.r||""]})}),u=location.href.split("#")[0]+"#tt="+encodeURIComponent(btoa(unescape(encodeURIComponent(JSON.stringify(a)))));$("code").value=u;cp()}
+function ls2(l){return l.slice().sort(function(a,b){return(a.s||0)-(b.s||0)})}
 var ANN={chat:"",items:[]};
 function A(){return ROLE==="admin"&&S.ann?S.ann:ANN}
 function loadAnn(){fetch("announcements.json?"+Date.now()).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(j){ANN={chat:j.chat||"",items:Array.isArray(j.items)?j.items:[]};if(ROLE==="admin"&&S.ann&&!S.ann.items.length&&!S.ann.chat){S.ann={chat:ANN.chat,items:ANN.items.slice()};save()}if(KEY&&view==="home")render()}).catch(function(){})}
@@ -195,9 +202,9 @@ function annH(){var a=A(),it=a.items.slice().sort(function(x,y){return(y.p?1:0)-
 function annAdd(){var t=$("at").value.trim();if(!t){toast("ใส่หัวข้อก่อนนะ");return}S.ann.items.push({id:Date.now(),t:t.slice(0,80),b:$("ab").value.trim().slice(0,1000),p:$("ap").checked,d:fmt(today())});save();toast("โพสต์แล้ว อย่าลืมดาวน์โหลดไฟล์ไปอัปโหลด");render()}
 function annDel(i){S.ann.items.splice(i,1);save();render()}
 function annChat(){S.ann.chat=$("ac").value.trim();save();toast("บันทึกลิงก์แล้ว")}
-function admExp(k){$("code").value=JSON.stringify(k?{v:1,chat:S.ann.chat||"",items:S.ann.items}:{v:1,tt:S.tt.map(function(l){return l.map(function(x){return{n:x.n,s:x.s,e:x.e,t:x.t,r:x.r}})})})}
+function admExp(k){$("code").value=JSON.stringify(k?{v:1,chat:S.ann.chat||"",items:S.ann.items}:{v:1,ver:Date.now(),tt:S.tt.map(function(l){return l.map(function(x){return{n:x.n,s:x.s,e:x.e,t:x.t,r:x.r}})})})}
 function admDl(k){admExp(k);var b=new Blob([$("code").value],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=k?"announcements.json":"timetable.json";document.body.appendChild(a);a.click();a.remove()}
-function vAdm(){var a=S.ann;return'<h3 class="sec" style="margin-top:4px">🛠 แอดมิน</h3><div class="dash"><div><div class="card"><b>📢 โพสต์ประกาศ</b><input id="at" type="text" placeholder="หัวข้อ" style="margin-top:10px"><textarea id="ab" placeholder="รายละเอียด"></textarea><div class="chips" style="margin:0"><label class="cb"><input type="checkbox" id="ap"> 📌 ปักหมุด</label><button class="btn p" onclick="annAdd()">+ โพสต์</button></div><div class="lbl" style="margin-top:14px">ลิงก์กลุ่มพูดคุย (LINE OpenChat, Discord ฯลฯ)</div><input id="ac" type="text" value="'+esc(a.chat||"")+'" placeholder="https://..." onchange="annChat()">'+a.items.map(function(x,i){return'<div class="task" style="border-color:var(--ac)"><div class="t">'+(x.p?"📌 ":"")+"<b>"+esc(x.t)+'</b></div><button class="x" onclick="annDel('+i+')">✕</button></div>'}).join("")+'</div></div><div><div class="card"><b>🔑 ช่วยเพื่อนที่ลืมรหัสผ่าน</b><p class="mu">ใส่เลขประจำตัวเพื่อน แล้วส่งรหัสให้เขา (ใช้ได้เฉพาะวันนี้) เพื่อนกด "ลืมรหัสผ่าน?" ที่หน้าเข้าสู่ระบบ แล้วตั้งรหัสใหม่</p><input id="rid" type="text" inputmode="numeric" placeholder="เลขประจำตัว"><button class="btn p" onclick="showRc()">ดูรหัสรีเซ็ต</button><div id="rc" style="font-size:20px;font-weight:700;margin-top:10px"></div></div><div class="card"><b>ส่งให้เพื่อนๆ</b><p class="mu">แก้ตารางที่แท็บ "ตารางเรียน" หรือโพสต์ประกาศ แล้วดาวน์โหลดไฟล์ไปอัปโหลดทับใน GitHub (ข้าง index.html) เพื่อนจะเห็นประกาศเมื่อเปิดแอป ส่วนตารางใหม่ เพื่อนที่ใช้อยู่แล้วต้องกด "ใช้ตารางล่าสุด" ในตั้งค่า</p><div class="chips"><button class="btn p" onclick="admDl(0)">⬇️ timetable.json</button><button class="btn p" onclick="admDl(1)">⬇️ announcements.json</button><button class="btn" onclick="cp()">📋 คัดลอก</button></div><textarea id="code" placeholder="เนื้อหาไฟล์จะขึ้นที่นี่"></textarea></div></div></div>'}
+function vAdm(){var a=S.ann;return'<h3 class="sec" style="margin-top:4px">🛠 แอดมิน</h3><div class="dash"><div><div class="card"><b>📢 โพสต์ประกาศ</b><input id="at" type="text" placeholder="หัวข้อ" style="margin-top:10px"><textarea id="ab" placeholder="รายละเอียด"></textarea><div class="chips" style="margin:0"><label class="cb"><input type="checkbox" id="ap"> 📌 ปักหมุด</label><button class="btn p" onclick="annAdd()">+ โพสต์</button></div><div class="lbl" style="margin-top:14px">ลิงก์กลุ่มพูดคุย (LINE OpenChat, Discord ฯลฯ)</div><input id="ac" type="text" value="'+esc(a.chat||"")+'" placeholder="https://..." onchange="annChat()">'+a.items.map(function(x,i){return'<div class="task" style="border-color:var(--ac)"><div class="t">'+(x.p?"📌 ":"")+"<b>"+esc(x.t)+'</b></div><button class="x" onclick="annDel('+i+')">✕</button></div>'}).join("")+'</div></div><div><div class="card"><b>🔑 ช่วยเพื่อนที่ลืมรหัสผ่าน</b><p class="mu">ใส่เลขประจำตัวเพื่อน แล้วส่งรหัสให้เขา (ใช้ได้เฉพาะวันนี้) เพื่อนกด "ลืมรหัสผ่าน?" ที่หน้าเข้าสู่ระบบ แล้วตั้งรหัสใหม่</p><input id="rid" type="text" inputmode="numeric" placeholder="เลขประจำตัว"><button class="btn p" onclick="showRc()">ดูรหัสรีเซ็ต</button><div id="rc" style="font-size:20px;font-weight:700;margin-top:10px"></div></div><div class="card"><b>ส่งให้เพื่อนๆ</b><p class="mu">แก้ตารางที่แท็บ "ตารางเรียน" หรือโพสต์ประกาศ แล้วดาวน์โหลดไฟล์ไปอัปโหลดทับใน GitHub (ข้าง index.html) เพื่อนจะเห็นประกาศเมื่อเปิดแอป ส่วนตารางใหม่ เพื่อนที่ใช้อยู่แล้วต้องกด "ใช้ตารางล่าสุด" ในตั้งค่า</p><div class="chips"><button class="btn p" onclick="admLink()">🔗 ลิงก์ตารางเรียน</button><button class="btn p" onclick="admDl(0)">⬇️ timetable.json</button><button class="btn p" onclick="admDl(1)">⬇️ announcements.json</button><button class="btn" onclick="cp()">📋 คัดลอก</button></div><textarea id="code" placeholder="เนื้อหาไฟล์จะขึ้นที่นี่"></textarea></div></div></div>'}
 var SH=["จ","อ","พ","พฤ","ศ","ส","อา"],ttSel=-1,PT=["08:40","09:30","10:20","11:10","12:00","12:50","13:40","14:30","15:20","16:10","17:00"];
 var PRE=[
 [[0,2,"ว22285","ครูธวลักษณ์","702 คอม2"],[2,1,"ค22101","ครูพิมพา","622"],[4,1,"อ22205","Robert","622"],[5,1,"ส22101","ครูนิธินันท์","622"],[6,1,"พ22103","ครูคำสิงห์","สนามฟุตบอล"],[7,1,"ท22101","ครูวณิชยา","622"],[8,1,"ง22101","ครูอภิเดช","คหกรรม2"]],
@@ -289,7 +296,7 @@ function vCal(){
   return h+"</div></div>";
 }
 function vTT(){
-  var td=dow(today());if(ttSel<0)ttSel=td;
+  var td=dow(today());if(ttSel<0)ttSel=td>4?0:td;
   var h='<h3 class="sec" style="margin-top:4px">🏫 ตารางเรียน</h3><div class="tabs">'+SH.map(function(n,i){return'<button class="tab'+(i===ttSel?" on":"")+(i===td?" now":"")+'" onclick="ttSel='+i+';render()">'+n+"</button>"}).join("")+'</div><div class="lbl" style="margin-bottom:8px">วัน'+DAYS[ttSel]+'</div>';
   var l=ls(ttSel);if(l.length)l.push({brk:1,s:3,e:1});l.sort(function(a,b){return(a.s||0)-(b.s||0)});
   h+=l.length?l.map(function(x){return lesH(x,ttSel)}).join(""):'<div class="card empty">วัน'+DAYS[ttSel]+'ยังไม่มีวิชา</div>';
@@ -378,7 +385,7 @@ $("fab").onclick=openAdd;
 var NAV=[["home","🏠","หน้าแรก"],["tasks","📖","งาน"],["tt","🏫","ตารางเรียน"],["cal","🗓️","ปฏิทิน"],["exam","🎓","สอบ"]];
 function go(v){view=v;render();$("main").scrollTop=0}
 function render(){
-  $("nav").innerHTML='<div class="logo">📚 งานค้าง</div>'+NAV.concat(EXTRA[ROLE]||[]).map(function(n){return'<button class="'+(view===n[0]?"on":"")+'" onclick="go(\''+n[0]+'\')"><span>'+n[1]+"</span>"+n[2]+"</button>"}).join("")+'<div class="who"><b>'+esc(uname())+'</b><button onclick="logout()">🚪 ออกจากระบบ</button></div>';
+  $("nav").innerHTML='<div class="logo">📚 MimeMine</div>'+NAV.concat(EXTRA[ROLE]||[]).map(function(n){return'<button class="'+(view===n[0]?"on":"")+'" onclick="go(\''+n[0]+'\')"><span>'+n[1]+"</span>"+n[2]+"</button>"}).join("")+'<div class="who"><b>'+esc(uname())+'</b><button onclick="logout()">🚪 ออกจากระบบ</button></div>';
   var f={hw:vHw,fee:vFee,adm:vAdm,home:vHome,tasks:vTasks,cal:vCal,tt:vTT,exam:vExam,set:vSet}[view];
   $("main").innerHTML=f();
 }
