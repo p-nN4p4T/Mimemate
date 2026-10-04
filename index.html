@@ -9,100 +9,115 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="งานค้าง">
 <style>
-:root{--bg:#f6f7fb;--card:#fff;--tx:#1d2433;--mu:#6b7280;--bd:#e3e6ee;--ac:#4f6bed;--rd:#e5484d;--or:#f59e0b;--gr:#2f9e6b;
-box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12141b;--card:#1b1e28;--tx:#e8eaf0;--mu:#9aa1b2;--bd:#2c3140;--ac:#7d93ff}}
-:root[data-theme="dark"]{--bg:#12141b;--card:#1b1e28;--tx:#e8eaf0;--mu:#9aa1b2;--bd:#2c3140;--ac:#7d93ff}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--tx);font-family:"Noto Sans Thai","Sarabun",system-ui,sans-serif;line-height:1.5}
-.wrap{max-width:920px;margin:0 auto;padding:16px}
-h1{font-size:22px;margin:4px 0 12px}
-.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:14px;margin-bottom:14px}
-.banner{border-radius:14px;padding:12px 14px;margin-bottom:14px;background:color-mix(in srgb,var(--rd) 12%,var(--card));border:1px solid var(--rd)}
-.banner.ok{background:color-mix(in srgb,var(--gr) 12%,var(--card));border-color:var(--gr)}
-.banner b{display:block;margin-bottom:4px}
-form{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.full{grid-column:1/-1}
-input,button,textarea{font:inherit;color:var(--tx)}
-input,textarea{padding:10px;border:1px solid var(--bd);border-radius:10px;background:var(--bg);width:100%}
-button{cursor:pointer;border:1px solid var(--bd);background:var(--card);border-radius:10px;padding:9px 12px}
-button.p{background:var(--ac);color:#fff;border-color:var(--ac);font-weight:600}
-.tabs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
-.tabs.f{margin:0}
-.tabs button.on{background:var(--ac);color:#fff;border-color:var(--ac)}
-.sub h3{margin:0 0 6px;font-size:16px;display:flex;align-items:center;gap:8px}
-.dot{width:12px;height:12px;border-radius:50%;display:inline-block;flex:none}
-.task{display:flex;align-items:center;gap:8px;padding:8px 0;border-top:1px solid var(--bd);flex-wrap:wrap}
-.task .t{flex:1;min-width:140px;word-break:break-word}
+:root{--bg:#f3f4fa;--card:#fff;--tx:#1b2030;--mu:#6b7280;--bd:#e4e7f0;--ac:#5468f0;--ac2:#8b5cf6;--rd:#e5484d;--or:#f59e0b;--gr:#22a06b;--sh:0 2px 10px rgba(30,40,90,.07)}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1117;--card:#1a1d27;--tx:#eceef5;--mu:#9aa1b4;--bd:#2a2f3f;--ac:#7388ff;--sh:none}}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--tx);font-family:"Noto Sans Thai","Sarabun",system-ui,sans-serif;line-height:1.5;overflow:hidden;padding:env(safe-area-inset-top,0) env(safe-area-inset-right,0) 0 env(safe-area-inset-left,0)}
+button,input{font:inherit;color:var(--tx)}
+button{cursor:pointer}
+#app{height:100%;display:grid;grid-template-columns:230px 1fr}
+nav{background:var(--card);border-right:1px solid var(--bd);padding:18px 12px;display:flex;flex-direction:column;gap:6px}
+.logo{font-weight:700;font-size:19px;padding:4px 10px 14px}
+nav button{display:flex;align-items:center;gap:10px;border:none;background:none;padding:12px 14px;border-radius:12px;font-size:16px;text-align:left;color:var(--mu)}
+nav button.on{background:color-mix(in srgb,var(--ac) 14%,var(--card));color:var(--ac);font-weight:600}
+main{overflow-y:auto;padding:18px 22px 110px;-webkit-overflow-scrolling:touch}
+.hero{background:linear-gradient(135deg,var(--ac),var(--ac2));color:#fff;border-radius:22px;padding:20px;margin-bottom:16px;position:relative}
+.hero h2{margin:0;font-size:24px}.hero p{margin:2px 0 14px;opacity:.9}
+.top{position:absolute;right:14px;top:14px;display:flex;gap:6px}
+.top button{background:rgba(255,255,255,.22);border:none;color:#fff;border-radius:12px;padding:8px 11px;font-size:17px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.stat{background:rgba(255,255,255,.2);border-radius:14px;padding:10px 12px}
+.stat b{font-size:26px;display:block;line-height:1.1}.stat span{font-size:13px;opacity:.95}
+h3.sec{margin:20px 0 8px;font-size:17px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:18px;padding:14px;margin-bottom:12px;box-shadow:var(--sh)}
+.empty{color:var(--mu);text-align:center;padding:26px 10px}
+.mu{color:var(--mu)}
+.task{display:flex;align-items:center;gap:8px;padding:10px 0 10px 10px;border-top:1px solid var(--bd);border-left:4px solid;flex-wrap:wrap}
+.card>.task:first-of-type{border-top:none}
+.task .t{flex:1;min-width:150px;word-break:break-word}
 .task.done .t{text-decoration:line-through;color:var(--mu)}
-.dn{background:var(--gr);color:#fff;border-color:var(--gr);padding:6px 10px;font-size:14px}
-.dn.u{background:var(--card);color:var(--mu);border-color:var(--bd)}
-.badge{font-size:12px;padding:2px 8px;border-radius:99px;white-space:nowrap;background:var(--bd);color:var(--mu)}
+.dn{background:var(--gr);color:#fff;border:none;border-radius:10px;padding:7px 12px;font-size:14px}
+.dn.u{background:var(--bd);color:var(--mu)}
+.x{border:none;background:none;color:var(--mu);padding:4px 8px;font-size:16px}
+.badge{font-size:12px;padding:2px 9px;border-radius:99px;white-space:nowrap;background:var(--bd);color:var(--mu)}
 .badge.late{background:var(--rd);color:#fff}.badge.today{background:var(--or);color:#fff}.badge.soon{background:color-mix(in srgb,var(--or) 25%,var(--card));color:var(--tx)}
-.x{border:none;background:none;color:var(--mu);padding:4px 8px}
-.empty,.mu{color:var(--mu)}.empty{text-align:center;padding:20px}
-.weekbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;gap:8px;flex-wrap:wrap}
-.scroll{overflow-x:auto}
-.week{display:grid;grid-template-columns:repeat(7,minmax(120px,1fr));gap:8px;min-width:860px}
-.day{border:1px solid var(--bd);border-radius:12px;padding:8px;min-height:120px;background:var(--card)}
-.day.now{border-color:var(--ac);box-shadow:0 0 0 1px var(--ac)}
-.day h4{margin:0 0 6px;font-size:13px;color:var(--mu)}
-.chip{font-size:12px;padding:4px 6px;border-radius:8px;margin-bottom:4px;border-left:4px solid;background:var(--bg);word-break:break-word}
-.chip.done{opacity:.45;text-decoration:line-through}
-.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--tx);color:var(--bg);padding:10px 16px;border-radius:99px;font-size:14px;z-index:9}
-textarea{min-height:110px;font-size:12px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 12px}
+.cb{border:1.5px solid var(--bd);background:var(--card);border-radius:99px;padding:7px 14px;font-size:15px;display:inline-flex;align-items:center;gap:6px}
+.cb.on{background:var(--ac);border-color:var(--ac);color:#fff}
+.cb i{width:10px;height:10px;border-radius:50%;display:inline-block}
+.sh3{display:flex;align-items:center;gap:8px;margin:0 0 4px;font-size:16px}
+.dot{width:12px;height:12px;border-radius:50%;flex:none}
+.grid{display:grid;grid-template-columns:repeat(7,minmax(135px,1fr));gap:10px;min-width:980px}
+.scroll{overflow-x:auto;padding-bottom:6px}
+.day{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:10px;min-height:140px}
+.day.now{border-color:var(--ac);box-shadow:0 0 0 1.5px var(--ac)}
+.day h4{margin:0 0 8px;font-size:14px;color:var(--mu)}
+.pc{font-size:13px;padding:6px 8px;border-radius:10px;margin-bottom:6px;border-left:4px solid;background:color-mix(in srgb,var(--mu) 10%,var(--card));word-break:break-word;display:flex;justify-content:space-between;gap:4px}
+.pc.done{opacity:.45;text-decoration:line-through}
+.addc{width:100%;border:1.5px dashed var(--bd);background:none;border-radius:10px;padding:6px;color:var(--mu);font-size:13px}
+.weekbar{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.btn{border:1px solid var(--bd);background:var(--card);border-radius:12px;padding:9px 14px}
+.btn.p{background:var(--ac);border-color:var(--ac);color:#fff;font-weight:600}
+input[type=text],input[type=date],textarea{width:100%;padding:12px;border:1.5px solid var(--bd);border-radius:12px;background:var(--bg);margin-bottom:10px}
+textarea{min-height:100px;font-size:12px}
+#fab{position:fixed;right:calc(22px + env(safe-area-inset-right,0px));bottom:calc(22px + env(safe-area-inset-bottom,0px));width:60px;height:60px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--ac),var(--ac2));color:#fff;font-size:32px;box-shadow:0 6px 18px rgba(84,104,240,.45);z-index:5}
+#ov{position:fixed;inset:0;background:rgba(10,12,25,.5);display:none;align-items:flex-end;justify-content:center;z-index:20}
+#ov.on{display:flex}
+#sheet{background:var(--card);width:100%;max-width:560px;border-radius:24px 24px 0 0;padding:18px 18px calc(20px + env(safe-area-inset-bottom,0px));max-height:92%;overflow-y:auto}
+@media (min-width:700px){#ov{align-items:center}#sheet{border-radius:24px}}
+#sheet h3{margin:0 0 10px}
+.seg{display:flex;gap:6px;margin-bottom:12px}.seg .cb{flex:1;justify-content:center;border-radius:12px}
+.lbl{font-size:13px;color:var(--mu)}
+.toast{position:fixed;left:50%;bottom:calc(96px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--tx);color:var(--bg);padding:10px 18px;border-radius:99px;font-size:14px;z-index:40}
+@media (max-width:819px){
+ #app{grid-template-columns:1fr;grid-template-rows:1fr auto}
+ nav{flex-direction:row;border-right:none;border-top:1px solid var(--bd);order:2;padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px));justify-content:space-around}
+ .logo{display:none}
+ nav button{flex-direction:column;gap:0;padding:6px 8px;font-size:12px;border-radius:10px}
+ nav button span{font-size:20px}
+ main{padding:12px 14px 100px}
+ #fab{bottom:calc(80px + env(safe-area-inset-bottom,0px));right:16px}
+ .toast{bottom:150px}
+}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <h1>📚 งานค้างของฉัน</h1>
-  <div id="banner"></div>
-
-  <div class="card">
-    <form id="f" onsubmit="return false">
-      <div class="tabs f full"><button type="button" id="ty1" class="on">📝 งาน</button><button type="button" id="ty2">🎓 สอบ</button></div>
-      <input id="subj" class="full" list="subjs" placeholder="วิชา (เช่น คณิตศาสตร์)" autocomplete="off">
-      <datalist id="subjs"></datalist>
-      <input id="title" class="full" placeholder="งานอะไร (เช่น ทำแบบฝึกหัดบทที่ 3)" autocomplete="off">
-      <input id="due" type="date" aria-label="วันที่">
-      <button class="p" id="add">+ เพิ่มงาน</button>
-    </form>
-  </div>
-
-  <div class="tabs">
-    <button id="t1" class="on">📖 ตามวิชา</button>
-    <button id="t2">🗓️ สัปดาห์</button>
-    <button id="t4">🎓 ตารางสอบ</button>
-    <button id="t5">🤝 แชร์เพื่อน</button>
-    <button id="t3">🔔 แจ้งเตือน</button>
-  </div>
-  <div id="main"></div>
+<div id="app">
+  <nav id="nav"></nav>
+  <main id="main"></main>
 </div>
+<button id="fab" aria-label="เพิ่ม">+</button>
+<input id="img" type="file" accept="image/*" style="display:none" onchange="onImg(event)">
+<div id="ov"><div id="sheet"></div></div>
 
 <script>
-var tasks=[],view="subj",wk=0,ty="task";
+var S={tasks:[],subjects:[],tt:[[],[],[],[],[],[],[]]},view="home",wk=0,flt="",form={type:"task",subj:""},ttDay=0;
 var DAYS=["จันทร์","อังคาร","พุธ","พฤหัสฯ","ศุกร์","เสาร์","อาทิตย์"];
-try{tasks=JSON.parse(localStorage.getItem("hw")||"[]")}catch(e){tasks=[]}
-function save(){try{localStorage.setItem("hw",JSON.stringify(tasks))}catch(e){}}
+var HUES=[225,265,335,15,38,150,175,290,355,95];
+try{var r=localStorage.getItem("hw2");if(r)S=JSON.parse(r);else{var o=localStorage.getItem("hw");if(o)S.tasks=JSON.parse(o)}}catch(e){}
+if(!S.tasks)S.tasks=[];if(!S.subjects)S.subjects=[];if(!S.tt||S.tt.length!==7)S.tt=[[],[],[],[],[],[],[]];
 function $(i){return document.getElementById(i)}
+function save(){try{localStorage.setItem("hw2",JSON.stringify(S))}catch(e){}}
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
-function col(s){var h=0;for(var i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))%360;return"hsl("+h+" 65% 50%)"}
+function addSubj(n){n=String(n).trim().slice(0,40);if(!n)return"";if(!S.subjects.some(function(s){return s.n===n}))S.subjects.push({n:n,h:HUES[S.subjects.length%HUES.length]});return n}
+S.tasks.forEach(function(t){addSubj(t.subj)});
+function col(n){var h=220;S.subjects.forEach(function(s){if(s.n===n)h=s.h});return"hsl("+h+" 70% 55%)"}
 function today(){var d=new Date();return new Date(d.getFullYear(),d.getMonth(),d.getDate())}
 function parse(s){var p=s.split("-");return new Date(+p[0],p[1]-1,+p[2])}
 function fmt(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
 function diff(s){return Math.round((parse(s)-today())/864e5)}
 function dm(s){var d=parse(s);return d.getDate()+"/"+(d.getMonth()+1)}
+function dow(d){return(d.getDay()+6)%7}
 function toast(m){var e=document.createElement("div");e.className="toast";e.textContent=m;document.body.appendChild(e);setTimeout(function(){e.remove()},2200)}
 function isEx(t){return t.type==="exam"}
 function badge(t){
-  if(isEx(t)){
-    var n=diff(t.due);
+  if(isEx(t)){var n=diff(t.due);
     if(n<0)return'<span class="badge">สอบแล้ว</span>';
     if(n===0)return'<span class="badge late">สอบวันนี้!</span>';
     if(n===1)return'<span class="badge today">สอบพรุ่งนี้</span>';
     if(n<=7)return'<span class="badge soon">สอบอีก '+n+' วัน</span>';
-    return'<span class="badge">'+dm(t.due)+" (อีก "+n+" วัน)</span>";
-  }
+    return'<span class="badge">'+dm(t.due)+" · อีก "+n+" วัน</span>";}
   if(t.done)return'<span class="badge">เสร็จแล้ว</span>';
   if(!t.due)return'<span class="badge">ไม่มีกำหนด</span>';
   var k=diff(t.due);
@@ -110,111 +125,180 @@ function badge(t){
   if(k===0)return'<span class="badge today">ส่งวันนี้!</span>';
   if(k===1)return'<span class="badge soon">พรุ่งนี้</span>';
   if(k<=3)return'<span class="badge soon">อีก '+k+' วัน</span>';
-  return'<span class="badge">'+dm(t.due)+" (อีก "+k+" วัน)</span>";
+  return'<span class="badge">'+dm(t.due)+" · อีก "+k+" วัน</span>";
 }
 function sortT(a,b){if(!!a.done!==!!b.done)return a.done?1:-1;return(a.due||"9999").localeCompare(b.due||"9999")}
-function row(t){
-  var btn=isEx(t)?"":(t.done?'<button class="dn u" onclick="tog('+t.id+')">↩ ยกเลิก</button>':'<button class="dn" onclick="tog('+t.id+')">✓ ทำเสร็จ</button>');
-  return'<div class="task'+(t.done?" done":"")+'"><div class="t">'+(isEx(t)?"🎓 <b>สอบ</b> ":"")+esc(t.title)+"</div>"+badge(t)+btn+'<button class="x" onclick="del('+t.id+')" aria-label="ลบ">✕</button></div>';
+function row(t,showSub){
+  var b=isEx(t)?"":(t.done?'<button class="dn u" onclick="tog('+t.id+')">↩ ยกเลิก</button>':'<button class="dn" onclick="tog('+t.id+')">✓ ทำเสร็จ</button>');
+  return'<div class="task'+(t.done?" done":"")+'" style="border-color:'+col(t.subj)+'"><div class="t">'+(showSub?"<b>"+esc(t.subj)+"</b> · ":"")+(isEx(t)?"🎓 สอบ ":"")+esc(t.title)+"</div>"+badge(t)+b+'<button class="x" onclick="del('+t.id+')" aria-label="ลบ">✕</button></div>';
 }
-function tog(id){tasks.forEach(function(t){if(t.id===id){t.done=!t.done;if(t.done)toast("เก่งมาก! ทำเสร็จแล้ว 🎉")}});save();render()}
-function del(id){tasks=tasks.filter(function(t){return t.id!==id});save();render()}
-function banner(){
-  var open=tasks.filter(function(t){return!isEx(t)&&!t.done&&t.due});
-  var late=open.filter(function(t){return diff(t.due)<0}),td=open.filter(function(t){return diff(t.due)===0}),tm=open.filter(function(t){return diff(t.due)===1});
-  var ex=tasks.filter(function(t){return isEx(t)&&diff(t.due)>=0&&diff(t.due)<=7}).sort(sortT);
-  var h="";
-  function l(a,x){if(a.length)h+="<div>"+x+": "+a.map(function(t){return esc(t.subj)+" – "+esc(t.title)}).join(", ")+"</div>"}
-  l(late,"🔴 เลยกำหนด");l(td,"🟠 ส่งวันนี้");l(tm,"🟡 ส่งพรุ่งนี้");
-  if(ex.length)h+="<div>🎓 สอบเร็วๆ นี้: "+ex.map(function(t){var n=diff(t.due);return esc(t.subj)+" ("+(n===0?"วันนี้":"อีก "+n+" วัน")+")"}).join(", ")+"</div>";
-  $("banner").innerHTML=h?'<div class="banner"><b>⚠️ ต้องรีบ</b>'+h+"</div>":'<div class="banner ok"><b>✅ ไม่มีงานด่วน</b>ยังไม่มีงานเลยกำหนด ส่งวันนี้/พรุ่งนี้ หรือสอบใน 7 วัน</div>';
+function tog(id){S.tasks.forEach(function(t){if(t.id===id){t.done=!t.done;if(t.done)toast("เก่งมาก! เสร็จอีกอันแล้ว 🎉")}});save();render()}
+function del(id){S.tasks=S.tasks.filter(function(t){return t.id!==id});save();render()}
+
+function vHome(){
+  var td=today(),pend=S.tasks.filter(function(t){return!isEx(t)&&!t.done});
+  var urg=pend.filter(function(t){return t.due&&diff(t.due)<=1}).sort(sortT);
+  var ex=S.tasks.filter(function(t){return isEx(t)&&diff(t.due)>=0&&diff(t.due)<=7}).sort(sortT);
+  var dn=td.toLocaleDateString("th-TH",{weekday:"long",day:"numeric",month:"long"});
+  function cl(i){var l=S.tt[i];return l.length?l.map(function(n){return'<span class="cb"><i style="background:'+col(n)+'"></i>'+esc(n)+"</span>"}).join(""):'<span class="mu">ยังไม่ได้ลงตารางเรียน</span>'}
+  var h='<div class="hero"><div class="top"><button onclick="askNotif()" aria-label="แจ้งเตือน">🔔</button><button onclick="go(\'set\')" aria-label="ตั้งค่า">⚙️</button></div><h2>สวัสดี 👋</h2><p>'+dn+'</p><div class="stats"><div class="stat"><b>'+pend.length+'</b><span>งานค้างทั้งหมด</span></div><div class="stat"><b>'+urg.length+'</b><span>ต้องรีบ</span></div><div class="stat"><b>'+ex.length+'</b><span>สอบใน 7 วัน</span></div></div></div>';
+  h+='<h3 class="sec">⚠️ ต้องรีบทำ</h3>'+(urg.length||ex.length?'<div class="card">'+urg.map(function(t){return row(t,1)}).join("")+ex.map(function(t){return row(t,1)}).join("")+"</div>":'<div class="card empty">ไม่มีงานด่วน สบายใจได้ ✅</div>');
+  h+='<h3 class="sec">📅 วันนี้เรียน</h3><div class="card"><div class="chips" style="margin:0">'+cl(dow(td))+'</div></div>';
+  h+='<h3 class="sec">🌙 พรุ่งนี้เรียน</h3><div class="card"><div class="chips" style="margin:0">'+cl((dow(td)+1)%7)+"</div></div>";
+  return h;
 }
-function render(){
-  var s=[];tasks.forEach(function(t){if(s.indexOf(t.subj)<0)s.push(t.subj)});
-  $("subjs").innerHTML=s.map(function(x){return'<option value="'+esc(x)+'">'}).join("");
-  banner();
-  ["t1:subj","t2:week","t4:exam","t5:share"].forEach(function(p){var a=p.split(":");$(a[0]).className=view===a[1]?"on":""});
-  var m=$("main"),h;
-  if(view==="subj"){
-    if(!tasks.length){m.innerHTML='<div class="empty">ยังไม่มีงาน เพิ่มงานแรกด้านบนได้เลย 👆</div>';return}
-    m.innerHTML=s.map(function(x){
-      var list=tasks.filter(function(t){return t.subj===x}).sort(sortT);
-      var left=list.filter(function(t){return!t.done&&!isEx(t)}).length;
-      return'<div class="card sub"><h3><span class="dot" style="background:'+col(x)+'"></span>'+esc(x)+' <span class="badge">ค้าง '+left+"</span></h3>"+list.map(row).join("")+"</div>";
-    }).join("");
-  }else if(view==="week"){
-    var t0=today(),mon=new Date(t0.getFullYear(),t0.getMonth(),t0.getDate()-(t0.getDay()+6)%7+wk*7),sun=new Date(mon.getFullYear(),mon.getMonth(),mon.getDate()+6);
-    h='<div class="weekbar"><button onclick="wk--;render()">◀</button><b>'+mon.getDate()+"/"+(mon.getMonth()+1)+" – "+sun.getDate()+"/"+(sun.getMonth()+1)+'</b><button onclick="wk=0;render()">สัปดาห์นี้</button><button onclick="wk++;render()">▶</button></div><div class="scroll"><div class="week">';
-    for(var i=0;i<7;i++){
-      var d=new Date(mon.getFullYear(),mon.getMonth(),mon.getDate()+i),k=fmt(d);
-      var it=tasks.filter(function(t){return t.due===k}).sort(sortT);
-      h+='<div class="day'+(k===fmt(t0)?" now":"")+'"><h4>'+DAYS[i]+" "+d.getDate()+"/"+(d.getMonth()+1)+"</h4>"+it.map(function(t){return'<div class="chip'+(t.done?" done":"")+'" style="border-color:'+col(t.subj)+'"><b>'+esc(t.subj)+"</b><br>"+(isEx(t)?"🎓 สอบ: ":"")+esc(t.title)+"</div>"}).join("")+"</div>";
-    }
-    h+="</div></div>";
-    var nod=tasks.filter(function(t){return!t.due&&!t.done});
-    if(nod.length)h+='<div class="card" style="margin-top:12px"><b>ไม่มีวันกำหนดส่ง</b>'+nod.map(row).join("")+"</div>";
-    m.innerHTML=h;
-  }else if(view==="exam"){
-    var ex=tasks.filter(isEx).sort(sortT),up=ex.filter(function(t){return diff(t.due)>=0}),pa=ex.filter(function(t){return diff(t.due)<0});
-    h=!ex.length?'<div class="empty">ยังไม่มีวันสอบ กดปุ่ม 🎓 สอบ ด้านบนเพื่อเพิ่ม</div>':"";
-    if(up.length)h+='<div class="card"><b>สอบที่กำลังจะมาถึง</b>'+up.map(function(t){return'<div class="task"><span class="dot" style="background:'+col(t.subj)+'"></span><div class="t"><b>'+esc(t.subj)+"</b> – "+esc(t.title)+"<br><span class=mu>"+DAYS[(parse(t.due).getDay()+6)%7]+" "+dm(t.due)+"</span></div>"+badge(t)+'<button class="x" onclick="del('+t.id+')">✕</button></div>'}).join("")+"</div>";
-    if(pa.length)h+='<div class="card"><b class="mu">สอบไปแล้ว</b>'+pa.map(row).join("")+"</div>";
-    m.innerHTML=h;
-  }else{
-    m.innerHTML='<div class="card"><b>🤝 แชร์ให้เพื่อน</b><p class="mu">สร้างรหัสแล้วส่งให้เพื่อนทางไลน์/แชต เพื่อนวางรหัสในช่องนี้แล้วกดนำเข้า ก็จะได้ตารางสอบหรืองานของเรา</p><div class="tabs"><button onclick="exp(1)">สร้างรหัส: ตารางสอบ</button><button onclick="exp(0)">สร้างรหัส: ทั้งหมด</button></div><textarea id="code" placeholder="รหัสจะขึ้นที่นี่ หรือวางรหัสที่เพื่อนส่งมา"></textarea><div class="tabs" style="margin:10px 0 0"><button onclick="cp()">📋 คัดลอก</button><button class="p" onclick="imp()">⬇️ นำเข้ารหัสที่เพื่อนส่งมา</button></div></div>';
+function vTasks(){
+  var h='<h3 class="sec" style="margin-top:4px">📖 งานแยกตามวิชา</h3><div class="chips"><button class="cb'+(flt?"":" on")+'" onclick="flt=\'\';render()">ทั้งหมด</button>'+S.subjects.map(function(s,i){return'<button class="cb'+(flt===s.n?" on":"")+'" onclick="setF('+i+')"><i style="background:'+col(s.n)+'"></i>'+esc(s.n)+"</button>"}).join("")+"</div>";
+  var subs=S.subjects.filter(function(s){return!flt||s.n===flt}),any=false;
+  subs.forEach(function(s){
+    var l=S.tasks.filter(function(t){return t.subj===s.n}).sort(sortT);if(!l.length)return;any=true;
+    var left=l.filter(function(t){return!t.done&&!isEx(t)}).length;
+    h+='<div class="card"><div class="sh3"><span class="dot" style="background:'+col(s.n)+'"></span><b>'+esc(s.n)+'</b><span class="badge">ค้าง '+left+"</span></div>"+l.map(function(t){return row(t,0)}).join("")+"</div>";
+  });
+  if(!any)h+='<div class="empty">ยังไม่มีงาน กดปุ่ม + มุมขวาล่างเพื่อเพิ่ม</div>';
+  return h;
+}
+function setF(i){flt=S.subjects[i].n;render()}
+function vCal(){
+  var t0=today(),mon=new Date(t0.getFullYear(),t0.getMonth(),t0.getDate()-dow(t0)+wk*7),sun=new Date(mon.getFullYear(),mon.getMonth(),mon.getDate()+6);
+  var h='<div class="weekbar"><button class="btn" onclick="wk--;render()">◀</button><b>'+mon.getDate()+"/"+(mon.getMonth()+1)+" – "+sun.getDate()+"/"+(sun.getMonth()+1)+'</b><span><button class="btn" onclick="wk=0;render()">สัปดาห์นี้</button> <button class="btn" onclick="wk++;render()">▶</button></span></div><div class="scroll"><div class="grid">';
+  for(var i=0;i<7;i++){
+    var d=new Date(mon.getFullYear(),mon.getMonth(),mon.getDate()+i),k=fmt(d);
+    var it=S.tasks.filter(function(t){return t.due===k}).sort(sortT);
+    h+='<div class="day'+(k===fmt(t0)?" now":"")+'"><h4>'+DAYS[i]+" "+d.getDate()+"/"+(d.getMonth()+1)+"</h4>"+it.map(function(t){return'<div class="pc'+(t.done?" done":"")+'" style="border-color:'+col(t.subj)+'"><span><b>'+esc(t.subj)+"</b><br>"+(isEx(t)?"🎓 สอบ ":"")+esc(t.title)+"</span></div>"}).join("")+"</div>";
   }
+  return h+"</div></div>";
 }
-function exp(onlyEx){
-  var l=tasks.filter(function(t){return onlyEx?isEx(t):true}).map(function(t){return{s:t.subj,t:t.title,d:t.due,y:t.type||"task"}});
-  if(!l.length){toast("ยังไม่มีข้อมูลให้แชร์");return}
-  $("code").value=btoa(unescape(encodeURIComponent(JSON.stringify(l))));
+function vTT(){
+  var td=dow(today());
+  var h='<h3 class="sec" style="margin-top:4px">🏫 ตารางเรียน</h3><p class="mu" style="margin-top:0">อัปโหลดรูปตารางเรียนให้ระบบอ่านชื่อวิชา หรือกด + ในแต่ละวันเพื่อเลือกวิชาเอง</p><button class="btn p" style="margin-bottom:12px" onclick="pickImg()">📷 อัปโหลดรูปตารางเรียน</button> <button class="btn" style="margin-bottom:12px;color:var(--rd)" onclick="askClr(\'tt\',0)">🗑 ล้างตารางทั้งหมด</button><div class="scroll"><div class="grid">';
+  for(var i=0;i<7;i++){
+    h+='<div class="day'+(i===td?" now":"")+'"><h4>'+DAYS[i]+"</h4>"+S.tt[i].map(function(n,j){return'<div class="pc" style="border-color:'+col(n)+'"><span><span class="mu">'+(j+1)+".</span> "+esc(n)+'</span><button class="x" style="padding:0 2px" onclick="rmC('+i+","+j+')">✕</button></div>'}).join("")+'<button class="addc" onclick="openCls('+i+')">+ เพิ่มวิชา</button>'+(S.tt[i].length?'<button class="addc" style="margin-top:6px;border-style:solid;color:var(--rd)" onclick="askClr(\'day\','+i+')">🗑 ล้างวันนี้</button>':"")+'</div>';
+  }
+  return h+"</div></div>";
+}
+
+function askClr(k,i){
+  var m=k==="day"?"ล้างวิชาทั้งหมดของวัน"+DAYS[i]+" ใช่ไหม?":k==="tt"?"ล้างตารางเรียนทั้งหมด (ทุกวัน) ใช่ไหม? วิชาในรายการจะยังอยู่":"ล้างวิชาทั้งหมดและตารางเรียน ใช่ไหม? วิชาที่ยังมีงานหรือวันสอบอยู่จะถูกเก็บไว้ เพื่อไม่ให้งานหาย";
+  sheet('<h3>ยืนยันการล้าง</h3><p>'+m+'</p><div class="chips"><button class="btn p" onclick="doClr(\''+k+'\','+i+')">ล้างเลย</button><button class="btn" onclick="closeS()">ยกเลิก</button></div>');
+}
+function doClr(k,i){
+  var msg="ล้างแล้ว";
+  if(k==="day")S.tt[i]=[];
+  else if(k==="tt")S.tt=[[],[],[],[],[],[],[]];
+  else{
+    S.tt=[[],[],[],[],[],[],[]];var keep={};S.tasks.forEach(function(t){keep[t.subj]=1});
+    var n=S.subjects.length;S.subjects=S.subjects.filter(function(x){return keep[x.n]});
+    msg="ล้างวิชา "+(n-S.subjects.length)+" รายการ"+(S.subjects.length?" (เก็บ "+S.subjects.length+" วิชาที่ยังมีงาน)":"");
+  }
+  save();closeS();toast(msg);render();
+}
+function rmC(i,j){S.tt[i].splice(j,1);save();render()}
+function vExam(){
+  var ex=S.tasks.filter(isEx).sort(sortT),up=ex.filter(function(t){return diff(t.due)>=0}),pa=ex.filter(function(t){return diff(t.due)<0});
+  var h='<h3 class="sec" style="margin-top:4px">🎓 ตารางสอบ</h3>';
+  if(!ex.length)return h+'<div class="empty">ยังไม่มีวันสอบ กดปุ่ม + แล้วเลือก 🎓 สอบ</div>';
+  if(up.length)h+='<div class="card">'+up.map(function(t){return'<div class="task" style="border-color:'+col(t.subj)+'"><div class="t"><b>'+esc(t.subj)+"</b> · "+esc(t.title)+'<br><span class="mu">'+DAYS[dow(parse(t.due))]+" "+dm(t.due)+"</span></div>"+badge(t)+'<button class="x" onclick="del('+t.id+')">✕</button></div>'}).join("")+"</div>";
+  if(pa.length)h+='<h3 class="sec mu">สอบไปแล้ว</h3><div class="card">'+pa.map(function(t){return row(t,1)}).join("")+"</div>";
+  return h;
+}
+function vSet(){
+  var h='<h3 class="sec" style="margin-top:4px">⚙️ ตั้งค่า</h3><div class="card"><b>วิชาของฉัน</b> <button class="btn" style="margin-left:6px" onclick="pickImg()">📷 จากรูปตารางเรียน</button><div class="chips">'+S.subjects.map(function(s,i){return'<span class="cb"><i style="background:'+col(s.n)+'"></i>'+esc(s.n)+' <button class="x" style="padding:0 2px" onclick="rmS('+i+')">✕</button></span>'}).join("")+'</div><input id="nsub" type="text" placeholder="พิมพ์ชื่อวิชาใหม่" autocomplete="off"><button class="btn p" onclick="addS()">+ เพิ่มวิชา</button> <button class="btn" style="color:var(--rd)" onclick="askClr(\'sub\',0)">🗑 ล้างวิชาทั้งหมด</button></div>';
+  h+='<div class="card"><b>🤝 แชร์ / นำเข้า</b><p class="mu">สร้างรหัสส่งให้เพื่อนทางแชต เพื่อนวางรหัสแล้วกดนำเข้า จะได้วิชา ตารางเรียน และตารางสอบเหมือนเรา (หรือวางรหัสตารางเรียนที่ได้จากแชต Claude)</p><div class="chips"><button class="btn" onclick="exp(0)">รหัส: ทั้งหมด</button><button class="btn" onclick="exp(1)">รหัส: ตารางเรียน</button><button class="btn" onclick="exp(2)">รหัส: ตารางสอบ</button></div><textarea id="code" placeholder="รหัสจะขึ้นที่นี่ หรือวางรหัสที่ได้รับ"></textarea><div class="chips" style="margin:0"><button class="btn" onclick="cp()">📋 คัดลอก</button><button class="btn p" onclick="imp()">⬇️ นำเข้า</button></div></div>';
+  return h;
+}
+function addS(){var v=$("nsub").value;if(!v.trim())return;addSubj(v);save();render()}
+function rmS(i){var n=S.subjects[i].n;if(S.tasks.some(function(t){return t.subj===n})){toast("ลบงานของวิชานี้ก่อนนะ");return}S.subjects.splice(i,1);S.tt=S.tt.map(function(l){return l.filter(function(x){return x!==n})});save();render()}
+function exp(m){
+  var it=S.tasks.filter(function(t){return m===2?isEx(t):m===0}).map(function(t){return{s:t.subj,t:t.title,d:t.due,y:t.type||"task"}});
+  var o={v:2,sub:S.subjects.map(function(s){return s.n}),tt:m===2?[[],[],[],[],[],[],[]]:S.tt,items:m===1?[]:it};
+  if(m===2)o.sub=[];
+  $("code").value=btoa(unescape(encodeURIComponent(JSON.stringify(o))));
 }
 function cp(){var c=$("code");if(!c.value){toast("ยังไม่มีรหัส");return}c.select();try{navigator.clipboard.writeText(c.value).then(function(){toast("คัดลอกแล้ว")},function(){document.execCommand("copy");toast("คัดลอกแล้ว")})}catch(e){try{document.execCommand("copy");toast("คัดลอกแล้ว")}catch(x){toast("กดค้างที่ช่องแล้วคัดลอกเอง")}}}
 function imp(){
-  var v=$("code").value.trim(),l,n=0;
-  try{l=JSON.parse(decodeURIComponent(escape(atob(v))));if(!Array.isArray(l))throw 0}catch(e){toast("รหัสไม่ถูกต้อง");return}
-  l.forEach(function(o,i){
-    if(!o||!o.s||!o.t)return;
-    var y=o.y==="exam"?"exam":"task";
-    if(tasks.some(function(t){return t.subj===o.s&&t.title===o.t&&(t.due||"")===(o.d||"")&&(t.type||"task")===y}))return;
-    tasks.push({id:Date.now()+i,subj:String(o.s).slice(0,60),title:String(o.t).slice(0,200),due:/^\d{4}-\d\d-\d\d$/.test(o.d||"")?o.d:"",done:false,type:y});n++;
+  var v=$("code").value.trim(),o,n=0;
+  try{o=JSON.parse(decodeURIComponent(escape(atob(v))));if(Array.isArray(o))o={items:o}}catch(e){toast("รหัสไม่ถูกต้อง");return}
+  (o.sub||[]).forEach(addSubj);
+  if(Array.isArray(o.tt)&&o.tt.length===7)o.tt.forEach(function(l,i){if(Array.isArray(l)&&l.length)S.tt[i]=l.map(addSubj).filter(Boolean)});
+  (o.items||[]).forEach(function(x,i){
+    if(!x||!x.s||!x.t)return;var y=x.y==="exam"?"exam":"task",s=addSubj(x.s);
+    if(S.tasks.some(function(t){return t.subj===s&&t.title===x.t&&(t.due||"")===(x.d||"")&&(t.type||"task")===y}))return;
+    S.tasks.push({id:Date.now()+i,subj:s,title:String(x.t).slice(0,200),due:/^\d{4}-\d\d-\d\d$/.test(x.d||"")?x.d:"",done:false,type:y});n++;
   });
-  save();toast("นำเข้า "+n+" รายการ");$("code").value="";banner();
+  save();toast("นำเข้าสำเร็จ");$("code").value="";render();
 }
-function setTy(x){
-  ty=x;$("ty1").className=x==="task"?"on":"";$("ty2").className=x==="exam"?"on":"";
-  $("title").placeholder=x==="exam"?"สอบเรื่องอะไร (เช่น บทที่ 1-3 กลางภาค)":"งานอะไร (เช่น ทำแบบฝึกหัดบทที่ 3)";
-  $("add").textContent=x==="exam"?"+ เพิ่มวันสอบ":"+ เพิ่มงาน";
+/* sheets */
+function sheet(h){$("sheet").innerHTML=h;$("ov").className="on"}
+function closeS(){$("ov").className=""}
+$("ov").onclick=function(e){if(e.target.id==="ov")closeS()};
+function chipsHtml(fn){return S.subjects.map(function(s,i){return'<button class="cb'+(form.subj===s.n&&fn==="pick"?" on":"")+'" data-n="'+esc(s.n)+'" onclick="'+fn+'('+i+')"><i style="background:'+col(s.n)+'"></i>'+esc(s.n)+"</button>"}).join("")}
+function openAdd(){
+  form={type:"task",subj:""};
+  sheet('<h3>เพิ่มรายการ</h3><div class="seg"><button class="cb on" id="ty1" onclick="setTy(\'task\')">📝 งาน</button><button class="cb" id="ty2" onclick="setTy(\'exam\')">🎓 สอบ</button></div><div class="lbl">แตะเลือกวิชา</div><div class="chips" id="pk">'+chipsHtml("pick")+'</div><input id="ns" type="text" placeholder="'+(S.subjects.length?"หรือพิมพ์วิชาใหม่":"พิมพ์ชื่อวิชา")+'" autocomplete="off"><input id="ti" type="text" placeholder="งานอะไร (เช่น ทำแบบฝึกหัดบทที่ 3)" autocomplete="off"><div class="lbl" id="dl">วันกำหนดส่ง</div><input id="du" type="date"><button class="btn p" style="width:100%" id="go" onclick="submitAdd()">เพิ่มงาน</button>');
 }
-$("ty1").onclick=function(){setTy("task")};$("ty2").onclick=function(){setTy("exam")};
-$("add").onclick=function(){
-  var s=$("subj").value.trim(),t=$("title").value.trim(),d=$("due").value;
-  if(!s||!t){toast("กรอกวิชาและรายละเอียดก่อนนะ");return}
-  if(ty==="exam"&&!d){toast("เลือกวันสอบด้วยนะ");return}
-  tasks.push({id:Date.now(),subj:s,title:t,due:d,done:false,type:ty});
-  save();$("title").value="";$("due").value="";toast(ty==="exam"?"เพิ่มวันสอบแล้ว 🎓":"เพิ่มงานแล้ว ✅");render();
-};
-$("title").addEventListener("keydown",function(e){if(e.key==="Enter")$("add").click()});
-$("t1").onclick=function(){view="subj";render()};
-$("t2").onclick=function(){view="week";render()};
-$("t4").onclick=function(){view="exam";render()};
-$("t5").onclick=function(){view="share";render()};
-$("t3").onclick=function(){
+function pick(i){form.subj=S.subjects[i].n;$("ns").value="";var b=$("pk").children;for(var k=0;k<b.length;k++)b[k].className="cb"+(b[k].getAttribute("data-n")===form.subj?" on":"")}
+function setTy(x){form.type=x;$("ty1").className="cb"+(x==="task"?" on":"");$("ty2").className="cb"+(x==="exam"?" on":"");$("ti").placeholder=x==="exam"?"สอบเรื่องอะไร (เช่น บทที่ 1-3)":"งานอะไร (เช่น ทำแบบฝึกหัดบทที่ 3)";$("dl").textContent=x==="exam"?"วันสอบ":"วันกำหนดส่ง";$("go").textContent=x==="exam"?"เพิ่มวันสอบ":"เพิ่มงาน"}
+function submitAdd(){
+  var s=$("ns").value.trim()||form.subj,t=$("ti").value.trim(),d=$("du").value;
+  if(!s){toast("เลือกหรือพิมพ์วิชาก่อนนะ");return}
+  if(!t){toast("ใส่รายละเอียดงานก่อนนะ");return}
+  if(form.type==="exam"&&!d){toast("เลือกวันสอบด้วยนะ");return}
+  s=addSubj(s);S.tasks.push({id:Date.now(),subj:s,title:t,due:d,done:false,type:form.type});save();closeS();
+  toast(form.type==="exam"?"เพิ่มวันสอบแล้ว 🎓":"เพิ่มงานแล้ว ✅");render();
+}
+function openCls(d){
+  ttDay=d;
+  sheet('<h3>เพิ่มวิชาวัน'+DAYS[d]+'</h3><div class="lbl">แตะเลือกวิชา</div><div class="chips">'+chipsHtml("pickC")+'</div><input id="ns" type="text" placeholder="หรือพิมพ์วิชาใหม่" autocomplete="off"><button class="btn p" style="width:100%" onclick="addC()">เพิ่มวิชานี้</button>');
+}
+function pickC(i){S.tt[ttDay].push(S.subjects[i].n);save();closeS();render()}
+function addC(){var n=addSubj($("ns").value);if(!n){toast("พิมพ์ชื่อวิชาก่อนนะ");return}S.tt[ttDay].push(n);save();closeS();render()}
+
+/* OCR timetable */
+var cand=[];
+function loadTess(cb){if(window.Tesseract)return cb();var t=document.createElement("script");t.src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js";t.onload=cb;t.onerror=function(){closeS();toast("โหลดตัวอ่านรูปไม่ได้ ตรวจอินเทอร์เน็ตแล้วลองใหม่")};document.head.appendChild(t)}
+function pickImg(){$("img").click()}
+function onImg(e){
+  var f=e.target.files[0];e.target.value="";if(!f)return;
+  sheet('<h3>กำลังอ่านรูป…</h3><p class="mu" id="pg">กำลังโหลดตัวอ่านรูป (ครั้งแรกอาจนาน 1 นาที)</p>');
+  loadTess(function(){
+    Tesseract.recognize(f,"tha+eng",{logger:function(m){var p=$("pg");if(p&&m.status)p.textContent=m.status+(m.progress?" "+Math.round(m.progress*100)+"%":"")}}).then(function(r){showCand(r.data.text)}).catch(function(){sheet('<h3>อ่านรูปไม่สำเร็จ</h3><p class="mu">ลองใช้รูปที่ชัดและตรงขึ้น หรือส่งรูปให้ Claude ในแชตแล้วนำเข้าด้วยรหัส</p><button class="btn" onclick="closeS()">ปิด</button>')});
+  });
+}
+function showCand(text){
+  var seen={};cand=[];
+  text.split(/[\s|_=\[\]{}<>~`]+/).forEach(function(w){
+    if(w.length<2||w.length>30||!/[A-Za-z\u0E00-\u0E7F]{2}/.test(w)||seen[w])return;seen[w]=1;cand.push(w);
+  });
+  cand=cand.slice(0,150);
+  sheet('<h3>เลือกชื่อวิชาจากรูป</h3><p class="mu">แตะคำที่เป็นชื่อวิชา (ชื่อยาวแตะหลายคำต่อกันได้ และแก้ในช่องได้) แล้วกด "เพิ่มวิชานี้" ทำซ้ำจนครบ</p><input id="ns" type="text" placeholder="ชื่อวิชา" autocomplete="off"><button class="btn p" style="width:100%" onclick="addTok()">+ เพิ่มวิชานี้</button><div class="chips" id="added"></div><div class="lbl">คำที่อ่านได้จากรูป'+(cand.length?"":" (ไม่พบข้อความ ลองรูปที่ชัดขึ้น)")+'</div><div class="chips">'+cand.map(function(w,i){return'<button class="cb" onclick="tokP('+i+')">'+esc(w)+"</button>"}).join("")+'</div><button class="btn" style="width:100%" onclick="closeS();render()">เสร็จ</button>');
+}
+function tokP(i){var n=$("ns");n.value=(n.value+" "+cand[i]).trim()}
+function addTok(){var n=addSubj($("ns").value);if(!n){toast("แตะคำหรือพิมพ์ชื่อวิชาก่อนนะ");return}save();$("ns").value="";$("added").insertAdjacentHTML("beforeend",'<span class="cb on">✓ '+esc(n)+"</span>")}
+$("fab").onclick=openAdd;
+/* nav + render */
+var NAV=[["home","🏠","หน้าแรก"],["tasks","📖","งาน"],["tt","🏫","ตารางเรียน"],["cal","🗓️","ปฏิทิน"],["exam","🎓","สอบ"]];
+function go(v){view=v;render();$("main").scrollTop=0}
+function render(){
+  $("nav").innerHTML='<div class="logo">📚 งานค้าง</div>'+NAV.map(function(n){return'<button class="'+(view===n[0]?"on":"")+'" onclick="go(\''+n[0]+'\')"><span>'+n[1]+"</span>"+n[2]+"</button>"}).join("");
+  var f={home:vHome,tasks:vTasks,cal:vCal,tt:vTT,exam:vExam,set:vSet}[view];
+  $("main").innerHTML=f();
+}
+function askNotif(){
   if(!("Notification" in window)){toast("เบราว์เซอร์นี้ไม่รองรับการแจ้งเตือน");return}
-  Notification.requestPermission().then(function(p){if(p==="granted"){notify(true)}else toast("ยังไม่ได้อนุญาตการแจ้งเตือน")});
-};
+  Notification.requestPermission().then(function(p){if(p==="granted"){notify(true);toast("เปิดแจ้งเตือนแล้ว")}else toast("ยังไม่ได้อนุญาตการแจ้งเตือน")});
+}
 function notify(force){
   if(!("Notification" in window)||Notification.permission!=="granted")return;
-  var key="hwn"+fmt(today()),dn=false;
-  try{dn=localStorage.getItem(key)}catch(e){}
+  var key="hwn"+fmt(today()),dn=false;try{dn=localStorage.getItem(key)}catch(e){}
   if(dn&&!force)return;
-  var u=tasks.filter(function(t){return t.due&&(isEx(t)?(diff(t.due)>=0&&diff(t.due)<=3):(!t.done&&diff(t.due)<=1))});
+  var u=S.tasks.filter(function(t){return t.due&&(isEx(t)?(diff(t.due)>=0&&diff(t.due)<=3):(!t.done&&diff(t.due)<=1))});
   if(!u.length)return;
   new Notification("📚 มีเรื่องต้องรีบ "+u.length+" รายการ",{body:u.slice(0,4).map(function(t){return(isEx(t)?"สอบ ":"")+t.subj+": "+t.title}).join("\n")});
   try{localStorage.setItem(key,"1")}catch(e){}
 }
-render();notify(false);
-setInterval(function(){if(view!=="share")render();notify(false)},60000);
+save();render();notify(false);
+setInterval(function(){if($("ov").className!=="on"&&view!=="set")render();notify(false)},60000);
 </script>
 </body>
 </html>
